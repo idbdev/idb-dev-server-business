@@ -1,0 +1,81 @@
+jobId: "991"
+jobName: User Master - Postgres Load
+jobType: Source Aligned Data Product
+developerId: f2228f41-8c2e-439a-807a-cdbaab7ef5b2
+domain: business
+alias: loading_into_postgres
+discoveryPort:
+  name: User Master - Postgres Load
+inputPorts:
+  - alias: data_1_1
+    isDynamic: true
+    connection: Postgres
+    tableName/query: data_1
+    optional:
+      persistDataFrame: false
+      enableDataReconciliation: false
+      enforceSchema: false
+      dataSetUrn: urn:dv:dataset:d6fe89a0-adc7-4b3a-941e-940a2e0c0c19
+      loggingOptions:
+        printSchema: true
+        count: true
+        showData: true
+    type: readPostGreSqlDbUsingJdbc
+productState:
+  isDynamic: true
+  alias: loading_into_postgres
+  retentionVersions: ""
+  logicalSchema:
+    properties:
+      Name:
+        type: STRING
+        description: Name of the user
+        sourceColumn: Name
+        sourceTable: public.data_1
+      Age:
+        type: STRING
+        description: Age of the user
+        sourceColumn: Age
+        sourceTable: public.data_1
+      City:
+        type: STRING
+        description: Location of the user
+        sourceColumn: City
+        sourceTable: public.data_1
+      Occupation:
+        type: STRING
+        description: Profession of the user
+        sourceColumn: Occupation
+        sourceTable: public.data_1
+  stateStoreType: writeDataFrameToPostgresTable
+  isProfilingEnabled: true
+  updateStrategy: Overwrite
+  connection: Postgres
+  tableName: public.user_master
+  optional:
+    persistDataFrame: false
+    enableDataReconciliation: false
+    enforceSchema: true
+    loggingOptions:
+      printSchema: true
+      count: true
+      showData: true
+  refreshInterval: 30 05 * * *
+transformation:
+  - isDynamic: true
+    alias: Spark_SQL_1
+    description: select all columns using spark
+    sequence: 2
+    inputDataFrameList:
+      - inputDataFrame: data_1_1
+        tempViewName: temp
+    query: select * from temp
+    optional:
+      persistDataFrame: false
+      loggingOptions:
+        printSchema: true
+        count: true
+        showData: true
+    type: operationThroughSqlQuery
+controlPort:
+  dataQualityRules: {}
