@@ -1,0 +1,105 @@
+jobId: "1043"
+jobName: test sadp iceberg-1
+jobType: Source Aligned Data Product
+developerId: e3177aef-f9f9-4f45-b0a7-a46ea5466170
+domain: consumer_goods
+alias: loading
+discoveryPort:
+  name: test sadp iceberg-1
+inputPorts:
+  - alias: Transaction_1
+    isDynamic: true
+    path: s3a://dataverse/testbed/fmgc/transaction.csv
+    optional:
+      persistDataFrame: false
+      advanceOptions:
+        delimiter: ","
+      enableDataReconciliation: false
+      enforceSchema: false
+      connection: S3 Connection - FMCG
+      dataSetUrn: urn:dv:dataset:7ca3ba31-10bb-4ea2-8044-812c15a2b96f
+    type: inputDelimited
+productState:
+  isDynamic: true
+  alias: loading
+  retentionVersions: ""
+  logicalSchema:
+    properties:
+      TransactionId:
+        type: STRING
+        description: Unique identifier for the transaction
+        sourceColumn: TransactionId
+        sourceTable: transaction
+      TransactionDate:
+        type: STRING
+        description: Date when the transaction occurred
+        sourceColumn: TransactionDate
+        sourceTable: transaction
+      ProductId:
+        type: STRING
+        description: Unique identifier for the product sold
+        sourceColumn: ProductId
+        sourceTable: transaction
+      QuantitySold:
+        type: STRING
+        description: Quantity of the product sold in the transaction
+        sourceColumn: QuantitySold
+        sourceTable: transaction
+      SalePrice:
+        type: STRING
+        description: Sale price per unit of the product
+        sourceColumn: SalePrice
+        sourceTable: transaction
+      TotalAmount:
+        type: STRING
+        description: Total amount for the transaction
+        sourceColumn: TotalAmount
+        sourceTable: transaction
+      PaymentMethod:
+        type: STRING
+        description: Method of payment used in the transaction
+        sourceColumn: PaymentMethod
+        sourceTable: transaction
+      TransactionMode:
+        type: STRING
+        description: Mode of the transaction (e.g., online, in-store)
+        sourceColumn: TransactionMode
+        sourceTable: transaction
+      PaymentStatus:
+        type: STRING
+        description: Status of the payment (e.g., completed, pending)
+        sourceColumn: PaymentStatus
+        sourceTable: transaction
+      CardType:
+        type: STRING
+        description: Type of card used for payment (e.g., Visa, MasterCard)
+        sourceColumn: CardType
+        sourceTable: transaction
+  stateStoreType: loadDataIceberg
+  isProfilingEnabled: false
+  updateStrategy: Overwrite
+  tableName: iceberg_meta.test_sadp_adp
+  warehousePath: s3a://dataverse/testbed_load/
+  catalogName: postgres_catalog
+  optional:
+    persistDataFrame: false
+    enableDataReconciliation: false
+    enforceSchema: true
+    enforceSchemaMethod: Warning
+    catalogType: postgres
+    connection: S3 Connection
+  refreshInterval: 30 5 * * *
+transformation:
+  - isDynamic: true
+    alias: Spark_SQL_1
+    description: transforming
+    sequence: 2
+    inputDataFrameList:
+      - inputDataFrame: Transaction_1
+        tempViewName: ts
+    query: select * from ts
+    optional:
+      persistDataFrame: false
+    type: operationThroughSqlQuery
+controlPort:
+  dataQualityRules: {}
