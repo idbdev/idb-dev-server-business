@@ -14,6 +14,26 @@ inputPorts:
       persistDataFrame: false
       advanceOptions:
         delimiter: ","
+      jsonSchema: '{"TransactionId":{"type":"string","source_table":"transaction","source_column":"TransactionId","description":"Unique
+        identifier for the
+        transaction"},"TransactionDate":{"type":"string","source_table":"transaction","source_column":"TransactionDate","description":"Date
+        when the transaction
+        occurred"},"ProductId":{"type":"string","source_table":"transaction","source_column":"ProductId","description":"Unique
+        identifier for the product
+        sold"},"QuantitySold":{"type":"string","source_table":"transaction","source_column":"QuantitySold","description":"Quantity
+        of the product sold in the
+        transaction"},"SalePrice":{"type":"string","source_table":"transaction","source_column":"SalePrice","description":"Sale
+        price per unit of the
+        product"},"TotalAmount":{"type":"string","source_table":"transaction","source_column":"TotalAmount","description":"Total
+        amount for the
+        transaction"},"PaymentMethod":{"type":"string","source_table":"transaction","source_column":"PaymentMethod","description":"Method
+        of payment used in the
+        transaction"},"TransactionMode":{"type":"string","source_table":"transaction","source_column":"TransactionMode","description":"Mode
+        of the transaction (e.g., online,
+        in-store)"},"PaymentStatus":{"type":"string","source_table":"transaction","source_column":"PaymentStatus","description":"Status
+        of the payment (e.g., completed,
+        pending)"},"CardType":{"type":"string","source_table":"transaction","source_column":"CardType","description":"Type
+        of card used for payment (e.g., Visa, MasterCard)"}}'
       enableDataReconciliation: false
       enforceSchema: false
       connection: S3 Connection - FMCG
