@@ -11,17 +11,27 @@ productState:
   isDynamic: true
   alias: load_into_iceberg_wh
   retentionVersions: ""
-  logicalSchema: ""
+  logicalSchema:
+    properties:
+      Id:
+        type: STRING
+        description: ""
+      Amount:
+        type: STRING
+        description: ""
+      batchId:
+        type: STRING
+        description: ""
   stateStoreType: loadDataIceberg
   isProfilingEnabled: false
   updateStrategy: Append
-  tableName: iceberg.kafka_test_copy
+  tableName: iceberg_meta.kafka_test_copy
   warehousePath: s3a://dataverse/dev_server/iceberg_warehouse_testing/
   catalogName: postgres_catalog
   optional:
     persistDataFrame: false
     enableDataReconciliation: false
-    enforceSchema: false
+    enforceSchema: true
     enforceSchemaMethod: Warning
     catalogType: postgres
     connection: S3 Connection
