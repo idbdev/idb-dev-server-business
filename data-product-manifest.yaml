@@ -15,13 +15,19 @@ productState:
     properties:
       Id:
         type: STRING
-        description: ""
-      Amount:
+        description: something
+        sourceColumn: Id
+        sourceTable: kafka_topic
+      Acount:
         type: STRING
-        description: ""
+        description: something
+        sourceColumn: Acount
+        sourceTable: kafka_topic
       batchId:
         type: STRING
-        description: ""
+        description: something
+        sourceColumn: batchId
+        sourceTable: kafka_topic
   stateStoreType: loadDataIceberg
   isProfilingEnabled: false
   updateStrategy: Append
