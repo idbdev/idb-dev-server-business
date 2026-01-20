@@ -1,0 +1,50 @@
+jobId: "2229"
+jobName: ingest_test copy
+jobType: Ingestion
+developerId: f2228f41-8c2e-439a-807a-cdbaab7ef5b2
+domain: ingestion
+alias: load_into_iceberg_wh
+discoveryPort:
+  name: ingest_test copy
+inputPorts: []
+productState:
+  isDynamic: true
+  alias: load_into_iceberg_wh
+  retentionVersions: ""
+  logicalSchema: ""
+  stateStoreType: loadDataIceberg
+  isProfilingEnabled: false
+  updateStrategy: Append
+  tableName: iceberg.kafka_test_copy
+  warehousePath: s3a://dataverse/dev_server/iceberg_warehouse_testing/
+  catalogName: postgres_catalog
+  optional:
+    persistDataFrame: false
+    enableDataReconciliation: false
+    enforceSchema: false
+    enforceSchemaMethod: Warning
+    catalogType: postgres
+    connection: S3 Connection
+    loggingOptions:
+      printSchema: true
+      count: true
+      showData: true
+  refreshInterval: 30 12 * * *
+transformation:
+  - isDynamic: true
+    alias: Spark_SQL_1
+    description: data transform
+    sequence: 2
+    inputDataFrameList:
+      - inputDataFrame: Kafka_1
+        tempViewName: temp
+    query: select * from temp
+    optional:
+      persistDataFrame: false
+      loggingOptions:
+        printSchema: true
+        count: true
+        showData: true
+    type: operationThroughSqlQuery
+controlPort:
+  dataQualityRules: {}
