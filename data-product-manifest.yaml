@@ -1,15 +1,31 @@
-jobId: "2231"
-jobName: raw_well_telemetry
-jobType: DataSets
+jobId: "2232"
+jobName: well_telemetry_real_time
+jobType: Source Aligned Data Product
 developerId: f2228f41-8c2e-439a-807a-cdbaab7ef5b2
 domain: business
-alias: load_into_inceberg
+alias: load_into_iceberg
 discoveryPort:
-  name: raw_well_telemetry
-inputPorts: []
+  name: well_telemetry_real_time
+inputPorts:
+  - alias: raw_well_telemetry_test_1
+    isDynamic: true
+    tableName: iceberg_meta.raw_well_telemetry_test
+    warehousePath: s3a://dataverse/dev_server/iceberg_warehouse_testing/
+    catalogName: postgres_catalog
+    optional:
+      persistDataFrame: false
+      catalogType: postgres
+      enforceSchema: false
+      connection: S3 Kafka Stream
+      dataSetUrn: urn:dv:dataset:b646fb44-2a37-4b5b-8ba1-8bb99b879993
+      loggingOptions:
+        printSchema: true
+        count: true
+        showData: true
+    type: readDataIceberg
 productState:
   isDynamic: true
-  alias: load_into_inceberg
+  alias: load_into_iceberg
   retentionVersions: ""
   logicalSchema:
     properties:
@@ -61,9 +77,9 @@ productState:
         sourceColumn: high_pressure_flag
         sourceTable: spark.derived_column
   stateStoreType: loadDataIceberg
-  isProfilingEnabled: false
+  isProfilingEnabled: true
   updateStrategy: Append
-  tableName: iceberg_meta.raw_well_telemetry_test
+  tableName: iceberg_meta.sadp_well_telemetry_rt
   warehousePath: s3a://dataverse/dev_server/iceberg_warehouse_testing/
   catalogName: postgres_catalog
   optional:
@@ -72,7 +88,7 @@ productState:
     enforceSchema: true
     enforceSchemaMethod: Warning
     catalogType: postgres
-    connection: S3 Connection
+    connection: S3 Kafka Stream
     loggingOptions:
       printSchema: true
       count: true
@@ -84,12 +100,9 @@ transformation:
     description: data transformation
     sequence: 2
     inputDataFrameList:
-      - inputDataFrame: Kafka_1
-        tempViewName: well_stream
-    query: SELECT asset_id, to_timestamp(event_time) AS event_time, pressure_psi,
-      temperature_c, flow_rate_bpd, status, source_system, batchId, CASE WHEN
-      pressure_psi > 4000 THEN true ELSE false END AS high_pressure_flag FROM
-      well_stream WHERE status = 'RUNNING'
+      - inputDataFrame: raw_well_telemetry_test_1
+        tempViewName: rwtt
+    query: select * from rwtt
     optional:
       persistDataFrame: false
       loggingOptions:
