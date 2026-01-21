@@ -93,7 +93,7 @@ productState:
       printSchema: true
       count: true
       showData: true
-  refreshInterval: 05 * * * *
+  refreshInterval: "*/5 * * * *"
 transformation:
   - isDynamic: true
     alias: Spark_SQL_1
