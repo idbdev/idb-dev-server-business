@@ -3,7 +3,7 @@ jobName: well_telemetry_ingestion
 jobType: Ingestion
 developerId: f2228f41-8c2e-439a-807a-cdbaab7ef5b2
 domain: ingestion
-alias: load_into_iceberg
+alias: well_telemetry_ingestion_job
 discoveryPort:
   name: well_telemetry_ingestion
 inputPorts: []
