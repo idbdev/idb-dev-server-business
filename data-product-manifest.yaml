@@ -5,7 +5,7 @@ developerId: f2228f41-8c2e-439a-807a-cdbaab7ef5b2
 domain: business
 alias: raw_well_telemetry_ds
 discoveryPort:
-  name: raw_well_telemetry
+  name: raw_well_telemetry_ds
 inputPorts: []
 productState:
   isDynamic: true
