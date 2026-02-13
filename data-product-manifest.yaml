@@ -160,7 +160,7 @@ controlPort:
     UnacceptableTextValueCheck:
       productState:
         checks:
-          - column: campaign_id
+          - column: ""
             valueList:
               - "0"
             expression: ">"
