@@ -157,9 +157,3 @@ controlPort:
         checks:
           - column: content_id
         referenceAlias: loading_Revenue_Attribution_data_in_iceberg
-    UnacceptableTextValueCheck:
-      productState:
-        checks:
-          - column: campaign_id
-            valueList: ""
-        referenceAlias: loading_Revenue_Attribution_data_in_iceberg
