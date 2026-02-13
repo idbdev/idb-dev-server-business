@@ -1,0 +1,165 @@
+jobId: "1071"
+jobName: Revenue Attribution copy
+jobType: Source Aligned Data Product
+developerId: 7679c14a-8908-42a5-8656-2abecbfa4b49
+domain: business
+alias: loading_Revenue_Attribution_data_in_iceberg
+discoveryPort:
+  name: Revenue Attribution copy
+inputPorts:
+  - alias: User_Profile_1
+    isDynamic: true
+    path: s3a://dataverse/testbed/cmt/user_profile.csv
+    optional:
+      persistDataFrame: false
+      advanceOptions:
+        delimiter: ","
+      enableDataReconciliation: false
+      enforceSchema: false
+      connection: S3 Connection - CMT
+      dataSetUrn: urn:dv:dataset:6b0b6fa0-2855-4a46-8629-acfd856667dd
+    type: inputDelimited
+  - alias: Payment_Transactions_1
+    isDynamic: true
+    path: s3a://dataverse/testbed/cmt/sadp_revenue_attribution.csv
+    optional:
+      persistDataFrame: false
+      advanceOptions:
+        delimiter: ","
+      enableDataReconciliation: false
+      enforceSchema: false
+      connection: S3 Connection - CMT
+      dataSetUrn: urn:dv:dataset:3c03fa20-87e4-44e4-9aca-3689e6da8c67
+    type: inputDelimited
+  - alias: Subscription_Lifecycle_1
+    isDynamic: true
+    path: s3a://dataverse/testbed/cmt/subscription_lifecycle.csv
+    optional:
+      persistDataFrame: false
+      advanceOptions:
+        delimiter: ","
+      enableDataReconciliation: false
+      enforceSchema: false
+      connection: S3 Connection - CMT
+      dataSetUrn: urn:dv:dataset:20987e42-2384-4d55-9eab-ea806895dbb7
+    type: inputDelimited
+productState:
+  isDynamic: true
+  alias: loading_Revenue_Attribution_data_in_iceberg
+  retentionVersions: ""
+  logicalSchema:
+    properties:
+      campaign_id:
+        type: STRING
+        description: Identifier of the marketing or promotional campaign associated with
+          the transaction
+        sourceColumn: payment_id
+        sourceTable: payment_transactions
+      attribution_date:
+        type: STRING
+        description: Date on which revenue is attributed to the campaign or subscription
+        sourceColumn: transaction_date
+        sourceTable: payment_transactions
+      impression_id:
+        type: STRING
+        description: Derived identifier representing impressions at a subscription level
+        sourceColumn: subscription_id
+        sourceTable: subscription_lifecycle
+      click_id:
+        type: STRING
+        description: Derived identifier representing clicks at a subscription level
+        sourceColumn: subscription_id
+        sourceTable: subscription_lifecycle
+      total_impressions:
+        type: STRING
+        description: Derived count of impressions at the subscription level
+        sourceColumn: subscription_id
+        sourceTable: subscription_lifecycle
+      total_clicks:
+        type: STRING
+        description: Derived count of clicks at the subscription level
+        sourceColumn: subscription_id
+        sourceTable: subscription_lifecycle
+      spend_amount:
+        type: STRING
+        description: Total advertising or promotional spend attributed to the campaign
+        sourceColumn: amount_paid
+        sourceTable: payment_transactions
+      revenue_amount:
+        type: STRING
+        description: Revenue generated and attributed to the campaign or subscription
+        sourceColumn: amount_paid
+        sourceTable: payment_transactions
+      currency:
+        type: STRING
+        description: Currency code for spend and revenue amounts
+        sourceColumn: currency
+        sourceTable: payment_transactions
+      subscriber_id:
+        type: STRING
+        description: Identifier of the subscriber associated with the transaction
+        sourceColumn: user_id
+        sourceTable: user_profile
+      transaction_id:
+        type: STRING
+        description: Unique identifier for the payment transaction
+        sourceColumn: payment_id
+        sourceTable: payment_transactions
+      content_id:
+        type: STRING
+        description: Identifier of the subscribed content or plan associated with the
+          revenue
+        sourceColumn: plan_id
+        sourceTable: subscription_lifecycle
+  stateStoreType: loadDataIceberg
+  isProfilingEnabled: true
+  updateStrategy: Overwrite
+  tableName: iceberg_meta.revenue_attribution
+  warehousePath: s3a://dataverse/testbed_load/
+  catalogName: postgres_catalog
+  optional:
+    persistDataFrame: false
+    enableDataReconciliation: false
+    enforceSchema: true
+    enforceSchemaMethod: Warning
+    catalogType: postgres
+    connection: S3 Connection - CMT
+    loggingOptions:
+      printSchema: true
+  refreshInterval: 30 5 * * *
+transformation:
+  - isDynamic: true
+    alias: Spark_SQL_1
+    description: Transforming Revenue Attribution
+    sequence: 4
+    inputDataFrameList:
+      - inputDataFrame: User_Profile_1
+        tempViewName: C1
+      - inputDataFrame: Payment_Transactions_1
+        tempViewName: C3
+      - inputDataFrame: Subscription_Lifecycle_1
+        tempViewName: C2
+    query: select * from C3
+    optional:
+      persistDataFrame: false
+      loggingOptions:
+        printSchema: true
+    type: operationThroughSqlQuery
+controlPort:
+  dataQualityRules:
+    RecordCountCheck:
+      productState:
+        expression: <=
+        number: 100
+        referenceAlias: loading_Revenue_Attribution_data_in_iceberg
+    NullValueCheck:
+      productState:
+        checks:
+          - column: content_id
+        referenceAlias: loading_Revenue_Attribution_data_in_iceberg
+    UnacceptableTextValueCheck:
+      productState:
+        checks:
+          - column: campaign_id
+            valueList: ""
+        referenceAlias: loading_Revenue_Attribution_data_in_iceberg
