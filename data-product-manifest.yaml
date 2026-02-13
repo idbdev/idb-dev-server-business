@@ -161,5 +161,8 @@ controlPort:
       productState:
         checks:
           - column: campaign_id
-            valueList: ""
+            valueList:
+              - "0"
+            expression: ">"
+            number: 0
         referenceAlias: loading_Revenue_Attribution_data_in_iceberg
