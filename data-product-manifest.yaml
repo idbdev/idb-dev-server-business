@@ -3,7 +3,7 @@ jobName: Revenue Attribution copy
 jobType: Source Aligned Data Product
 developerId: 7679c14a-8908-42a5-8656-2abecbfa4b49
 domain: business
-alias: loading_Revenue_Attribution_data_in_iceberg
+alias: loading_Revenue_Attribution_copy_data_in_iceberg
 discoveryPort:
   name: Revenue Attribution copy
 inputPorts:
@@ -45,7 +45,7 @@ inputPorts:
     type: inputDelimited
 productState:
   isDynamic: true
-  alias: loading_Revenue_Attribution_data_in_iceberg
+  alias: loading_Revenue_Attribution_copy_data_in_iceberg
   retentionVersions: ""
   logicalSchema:
     properties:
@@ -114,7 +114,7 @@ productState:
   stateStoreType: loadDataIceberg
   isProfilingEnabled: true
   updateStrategy: Overwrite
-  tableName: iceberg_meta.revenue_attribution
+  tableName: iceberg_meta.revenue_attribution_copy
   warehousePath: s3a://dataverse/testbed_load/
   catalogName: postgres_catalog
   optional:
@@ -151,12 +151,12 @@ controlPort:
       productState:
         expression: <=
         number: 100
-        referenceAlias: loading_Revenue_Attribution_data_in_iceberg
+        referenceAlias: loading_Revenue_Attribution_copy_data_in_iceberg
     NullValueCheck:
       productState:
         checks:
           - column: content_id
-        referenceAlias: loading_Revenue_Attribution_data_in_iceberg
+        referenceAlias: loading_Revenue_Attribution_copy_data_in_iceberg
     UnacceptableTextValueCheck:
       productState:
         checks:
@@ -165,4 +165,4 @@ controlPort:
               - "0"
             expression: ">"
             number: 0
-        referenceAlias: loading_Revenue_Attribution_data_in_iceberg
+        referenceAlias: loading_Revenue_Attribution_copy_data_in_iceberg
