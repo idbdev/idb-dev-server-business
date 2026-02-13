@@ -160,9 +160,6 @@ controlPort:
     UnacceptableTextValueCheck:
       productState:
         checks:
-          - column: ""
-            valueList:
-              - "0"
+          - column: spend_amount
             expression: ">"
-            number: 0
         referenceAlias: loading_Revenue_Attribution_copy_data_in_iceberg
