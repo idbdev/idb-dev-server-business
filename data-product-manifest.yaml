@@ -1,0 +1,375 @@
+jobId: "2492"
+jobName: Digital Shop 360
+jobType: Source Aligned Data Product
+developerId: f2228f41-8c2e-439a-807a-cdbaab7ef5b2
+domain: supply_chain
+alias: Load_data_into_iceberg
+discoveryPort:
+  name: Digital Shop 360
+inputPorts:
+  - alias: VSHOPFLOORORDER_1
+    isDynamic: true
+    path: s3a://byte-etl-externaldemo/PoC/Lupin/PASX/VSHOPFLOORORDER/
+    optional:
+      persistDataFrame: false
+      advanceOptions:
+        delimiter: ","
+      enableDataReconciliation: false
+      enforceSchema: false
+      connection: Lupin Data Source Connectivity
+      dataSetUrn: urn:dv:dataset:11ee966c-12b4-4343-9179-69b954f5b80f
+      dataQualityCheck:
+        tableId: 1
+        enable: false
+        UniquenessCheck:
+          - column: CUSTOMID
+    type: inputDelimited
+  - alias: PASXEQUIPMENT_1
+    isDynamic: true
+    path: s3a://byte-etl-externaldemo/PoC/Lupin/PASX/PASXEQUIPMENT/
+    optional:
+      persistDataFrame: false
+      advanceOptions:
+        delimiter: ","
+      enableDataReconciliation: false
+      enforceSchema: false
+      connection: Lupin Data Source Connectivity
+      dataSetUrn: urn:dv:dataset:ee99b60e-d4d1-42b1-8fb7-ee2f837feb29
+    type: inputDelimited
+  - alias: EQUIPMENTSTATUS_1
+    isDynamic: true
+    path: s3a://byte-etl-externaldemo/PoC/Lupin/PASX/EQUIPMENTSTATUS/
+    optional:
+      persistDataFrame: false
+      advanceOptions:
+        delimiter: ","
+      enableDataReconciliation: false
+      enforceSchema: false
+      connection: Lupin Data Source Connectivity
+      dataSetUrn: urn:dv:dataset:806416dc-4458-489c-b002-a8966abed652
+    type: inputDelimited
+  - alias: EDI_EQM_EQMLOG_1
+    isDynamic: true
+    path: s3a://byte-etl-externaldemo/PoC/Lupin/PASX/EDI_EQM_EQMLOG/
+    optional:
+      persistDataFrame: false
+      advanceOptions:
+        delimiter: ","
+      enableDataReconciliation: false
+      enforceSchema: false
+      connection: Lupin Data Source Connectivity
+      dataSetUrn: urn:dv:dataset:4d5f7edc-46ca-4b60-abdb-2910435af087
+    type: inputDelimited
+  - alias: VPASXEQMCOUNTERMAINTENANCE_1
+    isDynamic: true
+    path: s3a://byte-etl-externaldemo/PoC/Lupin/PASX/VPASXEQMCOUNTERMAINTENANCE/
+    optional:
+      persistDataFrame: false
+      advanceOptions:
+        delimiter: ","
+      enableDataReconciliation: false
+      enforceSchema: false
+      connection: Lupin Data Source Connectivity
+      dataSetUrn: urn:dv:dataset:4ab97bd1-f9ae-493a-a8d2-8e00f38d6d6f
+    type: inputDelimited
+  - alias: PR_EBR_AVAILABLE_MAT_IN_ITEM_1
+    isDynamic: true
+    path: s3a://byte-etl-externaldemo/PoC/Lupin/PASX/PR_EBR_AVAILABLE_MAT_IN_ITEM/
+    optional:
+      persistDataFrame: false
+      advanceOptions:
+        delimiter: ","
+      enableDataReconciliation: false
+      enforceSchema: false
+      connection: Lupin Data Source Connectivity
+      dataSetUrn: urn:dv:dataset:d01a8d52-e5a0-48f3-9893-cae552fae9ec
+    type: inputDelimited
+  - alias: PASXPRODUCTIONUNIT_1
+    isDynamic: true
+    path: s3a://byte-etl-externaldemo/PoC/Lupin/PASX/PASXPRODUCTIONUNIT/
+    optional:
+      persistDataFrame: false
+      advanceOptions:
+        delimiter: ","
+      enableDataReconciliation: false
+      enforceSchema: false
+      connection: Lupin Data Source Connectivity
+      dataSetUrn: urn:dv:dataset:1d93e6e5-9a23-4c23-95cc-64f04c96a296
+    type: inputDelimited
+  - alias: VBATCHRECORDREPORT_1
+    isDynamic: true
+    path: s3a://byte-etl-externaldemo/PoC/Lupin/PASX/VBATCHRECORDREPORT/
+    optional:
+      persistDataFrame: false
+      advanceOptions:
+        delimiter: ","
+      enableDataReconciliation: false
+      enforceSchema: false
+      connection: Lupin Data Source Connectivity
+      dataSetUrn: urn:dv:dataset:5233bd95-39b0-4175-bfbf-59553a8e8659
+    type: inputDelimited
+productState:
+  isDynamic: true
+  alias: Load_data_into_iceberg
+  retentionVersions: ""
+  logicalSchema:
+    properties:
+      UNITS:
+        type: STRING
+        description: Measurement unit of the rejected quantity (e.g., kg, L).
+        sourceColumn: UNITS
+        sourceTable: PASX.PASXPRODUCTIONUNIT
+      EQP_ID:
+        type: STRING
+        description: Unique identifier for the equipment.
+        sourceColumn: CUSTOMID
+        sourceTable: PASX.PASXEQUIPMENT
+      STATUS:
+        type: STRING
+        description: Indicates whether the equipment is currently usable or not.
+        sourceColumn: ISUSABLE
+        sourceTable: PASX.EQUIPMENTSTATUS
+      SHOP_ID:
+        type: STRING
+        description: Unique identifier for the shop or manufacturing area.
+        sourceColumn: CUSTOMID
+        sourceTable: PASX.VSHOPFLOORORDER
+      BATCH_ID:
+        type: STRING
+        description: Identifier of the batch processed using the equipment.
+        sourceColumn: INPUTBATCH
+        sourceTable: PASX.EDI_EQM_EQMLOG
+      CAPACITY:
+        type: STRING
+        description: Remaining or rated capacity of the equipment unit.
+        sourceColumn: REMSTORAGEUNIT
+        sourceTable: PASX.PASXEQUIPMENT
+      END_TIME:
+        type: DATETIME
+        description: Actual end time of the process step.
+        sourceColumn: ACTUALEND
+        sourceTable: PASX.VBATCHRECORDREPORT
+      EQP_NAME:
+        type: STRING
+        description: Name of the equipment (e.g., FBD-01, Blender-02).
+        sourceColumn: EQMNAME
+        sourceTable: PASX.PASXEQUIPMENT
+      EQP_TYPE:
+        type: STRING
+        description: Type/category of equipment (e.g., Dryer, Mixer).
+        sourceColumn: EQP_TYPE
+        sourceTable: PASX.PASXEQUIPMENT
+      OPERATOR:
+        type: STRING
+        description: Username of the operator who executed the batch operation.
+        sourceColumn: USERNAME
+        sourceTable: PASX.EDI_EQM_EQMLOG
+      AREA_TYPE:
+        type: STRING
+        description: Specification type or category of the area (e.g., Granulation,
+          Coating).
+        sourceColumn: SPECIFICATIONTYPE
+        sourceTable: PASX.VSHOPFLOORORDER
+      SHOP_NAME:
+        type: STRING
+        description: Descriptive name of the shop or manufacturing area.
+        sourceColumn: DESCRIPTION
+        sourceTable: PASX.VSHOPFLOORORDER
+      AVAIL_DATE:
+        type: DATETIME
+        description: Timestamp indicating when the equipment became available for use.
+        sourceColumn: AVAIL_DATE
+        sourceTable: PASX.PR_EBR_AVAILABLE_MAT_IN_ITEM
+      MAINT_DATE:
+        type: DATETIME
+        description: Date when the last maintenance was performed on the equipment.
+        sourceColumn: MAINT_DATE
+        sourceTable: PASX.VPASXEQMCOUNTERMAINTENANCE
+      START_TIME:
+        type: DATETIME
+        description: Actual start time of the process step.
+        sourceColumn: ACTUALSTART
+        sourceTable: PASX.VBATCHRECORDREPORT
+      REJECT_DATE:
+        type: DATETIME
+        description: Date when the rejection occurred during the production process.
+        sourceColumn: REJECT_DATE
+        sourceTable: PASX.PASXPRODUCTIONUNIT
+      PROCESS_STEP:
+        type: STRING
+        description: Status or phase of the current batch process (e.g., Running,
+          Completed).
+        sourceColumn: STATUS
+        sourceTable: PASX.VBATCHRECORDREPORT
+      PRODUCT_CODE:
+        type: STRING
+        description: Code representing the input material or product used in the batch.
+        sourceColumn: INPUTMATERIALNAME
+        sourceTable: PASX.EDI_EQM_EQMLOG
+      REJECT_REASON:
+        type: STRING
+        description: Reason for rejecting the batch or material (e.g., Quality Issue,
+          Contamination).
+        sourceColumn: REJECT_REASON
+        sourceTable: PASX.PASXPRODUCTIONUNIT
+      AVAILABLE_HOURS:
+        type: STRING
+        description: Total hours the equipment was available for operation.
+        sourceColumn: AVAILABLE_HOURS
+        sourceTable: PASX.PR_EBR_AVAILABLE_MAT_IN_ITEM
+      REJECT_QUANTITY:
+        type: STRING
+        description: Quantity of the rejected material or product.
+        sourceColumn: REJECT_QUANTITY
+        sourceTable: PASX.PASXPRODUCTIONUNIT
+      SCHEDULED_HOURS:
+        type: STRING
+        description: Total number of hours the equipment was scheduled for use.
+        sourceColumn: SCHEDULED_HOURS
+        sourceTable: PASX.PR_EBR_AVAILABLE_MAT_IN_ITEM
+      DURATION_MINUTES:
+        type: STRING
+        description: Duration of the process step in minutes, calculated from start and
+          end times.
+        sourceColumn: DURATION_MINUTES
+        sourceTable: PASX.calculated
+      PREV_OPERATION_END:
+        type: DATETIME
+        description: End time of the previous operation performed on the same equipment.
+        sourceColumn: PREV_OPERATION_END
+        sourceTable: PASX.calculated
+      UNPLANNED_DOWNTIME:
+        type: STRING
+        description: Duration of unplanned equipment downtime in hours.
+        sourceColumn: UNPLANNED_DOWNTIME
+        sourceTable: PASX.PR_EBR_AVAILABLE_MAT_IN_ITEM
+      UTILIZATION_PERCENT:
+        type: STRING
+        description: Utilization percentage of the equipment.
+        sourceColumn: UTILIZATION_PERCENT
+        sourceTable: PASX.PR_EBR_AVAILABLE_MAT_IN_ITEM
+      EQUIPMENT_IDLE_MINUTES:
+        type: STRING
+        description: Idle time of equipment in minutes between consecutive operations.
+        sourceColumn: EQUIPMENT_IDLE_MINUTES
+        sourceTable: PASX.calculated
+  stateStoreType: loadDataIceberg
+  isProfilingEnabled: true
+  updateStrategy: Overwrite
+  tableName: iceberg_meta.digital_shop_sadp
+  warehousePath: s3a://dataverse/dev_server/iceberg_warehouse_testing/
+  catalogName: postgres_catalog
+  optional:
+    persistDataFrame: false
+    enableDataReconciliation: false
+    enforceSchema: false
+    enforceSchemaMethod: Warning
+    catalogType: postgres
+    connection: Lupin Data Source Connectivity
+    loggingOptions:
+      printSchema: true
+      count: true
+      showData: true
+  refreshInterval: 30 12 * * *
+transformation:
+  - isDynamic: true
+    alias: LATEST_STATUS_DATE
+    description: LATEST_STATUS_DATE
+    sequence: 9
+    inputDataFrameList:
+      - inputDataFrame: EQUIPMENTSTATUS_1
+        tempViewName: EQUIPMENTSTATUS
+    query: SELECT CUSTOMID, MAX(STATUS_DATE) AS MAX_STATUS_DATE FROM EQUIPMENTSTATUS
+      GROUP BY CUSTOMID
+    optional:
+      persistDataFrame: false
+    type: operationThroughSqlQuery
+  - isDynamic: true
+    alias: LATEST_AVAIL_DATE
+    description: LATEST_AVAIL_DATE
+    sequence: 10
+    inputDataFrameList:
+      - inputDataFrame: PR_EBR_AVAILABLE_MAT_IN_ITEM_1
+        tempViewName: PR_EBR_AVAILABLE_MAT_IN_ITEM
+    query: SELECT EQUIPMENTID, MAX(AVAIL_DATE) AS MAX_AVAIL_DATE FROM
+      PR_EBR_AVAILABLE_MAT_IN_ITEM GROUP BY EQUIPMENTID
+    optional:
+      persistDataFrame: false
+    type: operationThroughSqlQuery
+  - isDynamic: true
+    alias: Transformation_logic
+    description: Transformation_logic
+    sequence: 11
+    inputDataFrameList:
+      - inputDataFrame: VSHOPFLOORORDER_1
+        tempViewName: VSHOPFLOORORDER
+      - inputDataFrame: PASXEQUIPMENT_1
+        tempViewName: PASXEQUIPMENT
+      - inputDataFrame: EQUIPMENTSTATUS_1
+        tempViewName: EQUIPMENTSTATUS
+      - inputDataFrame: EDI_EQM_EQMLOG_1
+        tempViewName: EDI_EQM_EQMLOG
+      - inputDataFrame: VPASXEQMCOUNTERMAINTENANCE_1
+        tempViewName: VPASXEQMCOUNTERMAINTENANCE
+      - inputDataFrame: PR_EBR_AVAILABLE_MAT_IN_ITEM_1
+        tempViewName: PR_EBR_AVAILABLE_MAT_IN_ITEM
+      - inputDataFrame: PASXPRODUCTIONUNIT_1
+        tempViewName: PASXPRODUCTIONUNIT
+      - inputDataFrame: VBATCHRECORDREPORT_1
+        tempViewName: VBATCHRECORDREPORT
+      - inputDataFrame: LATEST_STATUS_DATE
+        tempViewName: LATEST_STATUS_DATE
+      - inputDataFrame: LATEST_AVAIL_DATE
+        tempViewName: LATEST_AVAIL_DATE
+    query: SELECT sm.CUSTOMID AS SHOP_ID ,sm.DESCRIPTION AS SHOP_NAME
+      ,sm.SPECIFICATIONTYPE AS AREA_TYPE ,em.CUSTOMID AS EQP_ID ,em.EQMNAME AS
+      EQP_NAME ,em.EQP_TYPE ,em.REMSTORAGEUNIT AS CAPACITY ,es.ISUSABLE AS
+      STATUS ,eat.AVAIL_DATE ,eat.SCHEDULED_HOURS ,eat.UNPLANNED_DOWNTIME
+      ,eat.AVAILABLE_HOURS ,eat.UTILIZATION_PERCENT ,el.INPUTBATCH AS BATCH_ID
+      ,el.INPUTMATERIALNAME AS PRODUCT_CODE ,bea.STATUS AS PROCESS_STEP
+      ,bea.ACTUALSTART AS START_TIME ,bea.ACTUALEND AS END_TIME
+      ,ROUND((unix_timestamp(bea.ACTUALEND) - unix_timestamp(bea.ACTUALSTART)) /
+      60, 1) AS DURATION_MINUTES ,el.USERNAME AS OPERATOR ,LAG(bea.ACTUALEND)
+      OVER ( PARTITION BY em.CUSTOMID ORDER BY bea.ACTUALSTART ) AS
+      PREV_OPERATION_END ,( unix_timestamp(bea.ACTUALSTART) -
+      unix_timestamp(LAG(bea.ACTUALEND) OVER ( PARTITION BY em.CUSTOMID ORDER BY
+      bea.ACTUALSTART )) ) / 60 AS EQUIPMENT_IDLE_MINUTES ,pr.REJECT_DATE
+      ,pr.REJECT_REASON ,pr.REJECT_QUANTITY ,pr.UNITS ,emt.MAINT_DATE FROM
+      VSHOPFLOORORDER sm JOIN PASXEQUIPMENT em ON sm.CUSTOMID = em.SHOP_ID JOIN
+      EDI_EQM_EQMLOG el ON el.EQUIPMENTCUSTOMID = em.CUSTOMID JOIN
+      EQUIPMENTSTATUS es ON em.CUSTOMID = es.CUSTOMID JOIN LATEST_STATUS_DATE
+      lsd ON es.CUSTOMID = lsd.CUSTOMID AND es.STATUS_DATE = lsd.MAX_STATUS_DATE
+      LEFT JOIN PR_EBR_AVAILABLE_MAT_IN_ITEM eat ON em.CUSTOMID =
+      eat.EQUIPMENTID JOIN LATEST_AVAIL_DATE lad ON eat.EQUIPMENTID =
+      lad.EQUIPMENTID AND eat.AVAIL_DATE = lad.MAX_AVAIL_DATE JOIN
+      VBATCHRECORDREPORT bea ON bea.EQUIPMENT = em.CUSTOMID AND bea.LOG_ID =
+      el.LOG_ID JOIN PASXPRODUCTIONUNIT pr ON pr.LOG_ID = el.LOG_ID AND
+      pr.EQP_ID = em.CUSTOMID JOIN VPASXEQMCOUNTERMAINTENANCE emt ON emt.EQP_ID
+      = em.CUSTOMID
+    optional:
+      persistDataFrame: false
+    type: operationThroughSqlQuery
+controlPort:
+  dataQualityRules:
+    NullValueCheck:
+      productState:
+        checks:
+          - column: SHOP_ID
+          - column: EQP_ID
+        referenceAlias: Load_data_into_iceberg
+    UnacceptableTextValueCheck:
+      productState:
+        checks:
+          - column: STATUS
+            valueList:
+              - In Use
+              - Available
+              - Maintenance
+              - Down
+              - Qualification
+        referenceAlias: Load_data_into_iceberg
+    UniquenessCheck:
+      inputPort:
+        - checks:
+            - column: CUSTOMID
+          referenceAlias: VSHOPFLOORORDER_1
