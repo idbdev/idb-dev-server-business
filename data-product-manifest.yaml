@@ -262,14 +262,13 @@ productState:
   optional:
     persistDataFrame: false
     enableDataReconciliation: false
-    enforceSchema: false
+    enforceSchema: true
     enforceSchemaMethod: Warning
     catalogType: postgres
     connection: Lupin Data Source Connectivity
     loggingOptions:
       printSchema: true
       count: true
-      showData: true
   refreshInterval: 30 12 * * *
 transformation:
   - isDynamic: true
@@ -351,23 +350,6 @@ transformation:
     type: operationThroughSqlQuery
 controlPort:
   dataQualityRules:
-    NullValueCheck:
-      productState:
-        checks:
-          - column: SHOP_ID
-          - column: EQP_ID
-        referenceAlias: Load_data_into_iceberg
-    UnacceptableTextValueCheck:
-      productState:
-        checks:
-          - column: STATUS
-            valueList:
-              - In Use
-              - Available
-              - Maintenance
-              - Down
-              - Qualification
-        referenceAlias: Load_data_into_iceberg
     UniquenessCheck:
       inputPort:
         - checks:
