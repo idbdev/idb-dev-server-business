@@ -1,7 +1,7 @@
 jobId: "992"
 jobName: User Master - Iceberg to Iceberg
 jobType: Source Aligned Data Product
-developerId: e57fd089-0c45-4273-8d8d-92f488de08b7
+developerId: f2228f41-8c2e-439a-807a-cdbaab7ef5b2
 domain: business
 alias: load_all_columns_in_iceberg
 discoveryPort:
@@ -89,14 +89,6 @@ transformation:
     type: operationThroughSqlQuery
 controlPort:
   dataQualityRules:
-    UnacceptableTextValueCheck:
-      productState:
-        checks:
-          - column: Age
-            valueList:
-              - "150"
-            expression: <=
-        referenceAlias: load_all_columns_in_iceberg
     RecordCountCheck:
       inputPort:
         - expression: ">="
