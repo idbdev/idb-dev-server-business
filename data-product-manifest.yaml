@@ -99,7 +99,10 @@ controlPort:
       productState:
         checks:
           - column: Age
-            valueList: ""
+            valueList:
+              - "30"
+              - "40"
+            expression: "!="
         referenceAlias: load_all_columns_in_iceberg
     RecordCountCheck:
       inputPort:
