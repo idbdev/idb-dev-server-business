@@ -97,7 +97,7 @@ controlPort:
             valueList:
               - "30"
               - "40"
-            expression: "!="
+            expression: ==
         referenceAlias: load_all_columns_in_iceberg
     RecordCountCheck:
       inputPort:
