@@ -90,14 +90,15 @@ transformation:
     type: operationThroughSqlQuery
 controlPort:
   dataQualityRules:
-    UnacceptableTextValueCheck:
+    NullValueCheck:
       productState:
         checks:
           - column: Age
-            valueList:
-              - "30"
-              - "40"
-            expression: ==
+        referenceAlias: load_all_columns_in_iceberg
+    UnacceptableTextValueCheck:
+      productState:
+        checks:
+          - column: ""
         referenceAlias: load_all_columns_in_iceberg
     RecordCountCheck:
       inputPort:
