@@ -95,8 +95,7 @@ controlPort:
           - column: Age
             valueList:
               - "150"
-              - "180"
-            expression: "!="
+            expression: <=
         referenceAlias: load_all_columns_in_iceberg
     RecordCountCheck:
       inputPort:
