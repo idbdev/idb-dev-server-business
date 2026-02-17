@@ -70,7 +70,6 @@ productState:
     loggingOptions:
       printSchema: true
       count: true
-      showData: true
   refreshInterval: 30 12 * * *
 transformation:
   - isDynamic: true
@@ -90,15 +89,14 @@ transformation:
     type: operationThroughSqlQuery
 controlPort:
   dataQualityRules:
-    NullValueCheck:
-      productState:
-        checks:
-          - column: Age
-        referenceAlias: load_all_columns_in_iceberg
     UnacceptableTextValueCheck:
       productState:
         checks:
-          - column: ""
+          - column: Age
+            valueList:
+              - "30"
+              - "40"
+            expression: ==
         referenceAlias: load_all_columns_in_iceberg
     RecordCountCheck:
       inputPort:
