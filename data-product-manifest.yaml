@@ -92,15 +92,19 @@ controlPort:
     NullValueCheck:
       productState:
         checks:
-          - column: Age
+          - column: Name
         referenceAlias: load_all_columns_in_iceberg
     UnacceptableTextValueCheck:
       productState:
         checks:
           - column: Age
             valueList:
-              - "150"
+              - "0"
             expression: ">="
+          - column: Age
+            valueList:
+              - "101"
+            expression: <=
         referenceAlias: load_all_columns_in_iceberg
     RecordCountCheck:
       inputPort:
