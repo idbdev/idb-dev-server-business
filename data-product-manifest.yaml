@@ -1,0 +1,80 @@
+jobId: "2511"
+jobName: Risk360
+jobType: Source Aligned Data Product
+developerId: 3af0876b-d886-4635-af06-b2ecb43da78e
+domain: business
+alias: load_all_columns_in_iceberg
+discoveryPort:
+  name: Risk360
+inputPorts:
+  - alias: User_-_Iceberg_1
+    isDynamic: true
+    path: s3a://dataverse/dummy-data/data_1.csv
+    optional:
+      persistDataFrame: false
+      advanceOptions:
+        delimiter: ","
+      enableDataReconciliation: false
+      enforceSchema: false
+      connection: S3 Connection
+      dataSetUrn: urn:dv:dataset:c5d39982-f0c0-494f-845b-de70d026c29b
+      loggingOptions:
+        printSchema: true
+        count: true
+        showData: true
+    type: inputDelimited
+productState:
+  isDynamic: true
+  alias: load_all_columns_in_iceberg
+  retentionVersions: ""
+  logicalSchema:
+    properties:
+      Name:
+        type: STRING
+        description: Name of the user
+        sourceColumn: Name
+        sourceTable: public.data_1
+      Age:
+        type: STRING
+        description: Age of the user
+        sourceColumn: Age
+        sourceTable: public.data_1
+      City:
+        type: STRING
+        description: Location of the user
+        sourceColumn: City
+        sourceTable: public.data_1
+      Occupation:
+        type: STRING
+        description: Profession of the user
+        sourceColumn: Occupation
+        sourceTable: public.data_1
+  stateStoreType: loadDataIceberg
+  isProfilingEnabled: false
+  updateStrategy: Overwrite
+  tableName: iceberg_meta.user_on_iceberg
+  warehousePath: s3a://dataverse/dev_server/iceberg_warehouse_testing/
+  catalogName: postres_catalog
+  optional:
+    persistDataFrame: false
+    enableDataReconciliation: false
+    enforceSchema: true
+    enforceSchemaMethod: Warning
+    catalogType: postgres
+    loggingOptions:
+      printSchema: true
+  refreshInterval: 30 12 * * *
+transformation:
+  - isDynamic: true
+    alias: Spark_SQL_1
+    description: select all columns
+    sequence: 2
+    inputDataFrameList:
+      - inputDataFrame: User_-_Iceberg_1
+        tempViewName: user
+    query: select * from user
+    optional:
+      persistDataFrame: false
+    type: operationThroughSqlQuery
+controlPort:
+  dataQualityRules: {}
