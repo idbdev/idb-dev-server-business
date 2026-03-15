@@ -3,7 +3,7 @@ jobName: Risk360
 jobType: Source Aligned Data Product
 developerId: 3af0876b-d886-4635-af06-b2ecb43da78e
 domain: business
-alias: load_all_columns_in_iceberg
+alias: Risk360
 discoveryPort:
   name: Risk360
 inputPorts:
