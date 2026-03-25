@@ -1,0 +1,69 @@
+jobId: "996"
+jobName: Postgres-to-Postgres_EMR_Test
+jobType: Source Aligned Data Product
+developerId: 38447212-ca00-454f-87a0-aac453198c25
+domain: business
+alias: Load_to_postgres_table
+discoveryPort:
+  name: Postgres-to-Postgres_EMR_Test
+inputPorts:
+  - alias: data_1_1
+    isDynamic: true
+    connection: Postgres connection
+    tableName/query: public.data_1
+    optional:
+      persistDataFrame: false
+      enableDataReconciliation: false
+      enforceSchema: false
+      dataSetUrn: urn:dv:dataset:379884a9-7d58-4b13-bd55-a1df0014dbd4
+      dataQualityCheck:
+        tableId: 1
+        enable: true
+        RecordCountCheck:
+          expression: ">="
+          number: 200
+      loggingOptions:
+        printSchema: true
+        count: true
+    type: readPostGreSqlDbUsingJdbc
+productState:
+  isDynamic: true
+  alias: Load_to_postgres_table
+  retentionVersions: ""
+  logicalSchema: ""
+  stateStoreType: writeDataFrameToPostgresTable
+  isProfilingEnabled: true
+  updateStrategy: Overwrite
+  connection: Postgres connection
+  tableName: public.testDP_EMR1
+  optional:
+    persistDataFrame: false
+    enableDataReconciliation: false
+    enforceSchema: false
+    loggingOptions:
+      printSchema: true
+      count: true
+  refreshInterval: 33 12 * * *
+transformation:
+  - isDynamic: true
+    alias: Spark_SQL_1
+    description: select all data
+    sequence: 2
+    inputDataFrameList:
+      - inputDataFrame: data_1_1
+        tempViewName: temp1
+    query: select * from temp1
+    optional:
+      persistDataFrame: false
+    type: operationThroughSqlQuery
+controlPort:
+  dataQualityRules:
+    RecordCountCheck:
+      productState:
+        expression: ">="
+        number: 700
+        referenceAlias: Load_to_postgres_table
+      inputPort:
+        - expression: ">="
+          number: 200
+          referenceAlias: data_1_1
