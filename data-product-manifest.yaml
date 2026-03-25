@@ -30,7 +30,23 @@ productState:
   isDynamic: true
   alias: Load_to_postgres_table
   retentionVersions: ""
-  logicalSchema: ""
+  logicalSchema:
+    properties:
+      id:
+        type: STRING
+        description: Unique identifier of the user
+        sourceColumn: Id
+        sourceTable: public.data_1
+      name:
+        type: STRING
+        description: Name of the user
+        sourceColumn: Name
+        sourceTable: public.data_1
+      address:
+        type: STRING
+        description: Address of the user
+        sourceColumn: Address
+        sourceTable: public.data_1
   stateStoreType: writeDataFrameToPostgresTable
   isProfilingEnabled: true
   updateStrategy: Overwrite
@@ -39,7 +55,7 @@ productState:
   optional:
     persistDataFrame: false
     enableDataReconciliation: false
-    enforceSchema: false
+    enforceSchema: true
     loggingOptions:
       printSchema: true
       count: true
