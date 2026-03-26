@@ -3,7 +3,7 @@ jobName: Postgres-to-Postgres_EMR_Test
 jobType: Source Aligned Data Product
 developerId: 38447212-ca00-454f-87a0-aac453198c25
 domain: business
-alias: Load_to_postgres_table
+alias: Load_to_postgres_table1
 discoveryPort:
   name: Postgres-to-Postgres_EMR_Test
 inputPorts:
@@ -28,7 +28,7 @@ inputPorts:
     type: readPostGreSqlDbUsingJdbc
 productState:
   isDynamic: true
-  alias: Load_to_postgres_table
+  alias: Load_to_postgres_table1
   retentionVersions: ""
   logicalSchema:
     properties:
@@ -78,7 +78,7 @@ controlPort:
       productState:
         expression: ">="
         number: 700
-        referenceAlias: Load_to_postgres_table
+        referenceAlias: Load_to_postgres_table1
       inputPort:
         - expression: ">="
           number: 200
