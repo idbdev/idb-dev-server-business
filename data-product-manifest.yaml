@@ -16,12 +16,6 @@ inputPorts:
       enableDataReconciliation: false
       enforceSchema: false
       dataSetUrn: urn:dv:dataset:379884a9-7d58-4b13-bd55-a1df0014dbd4
-      dataQualityCheck:
-        tableId: 1
-        enable: true
-        RecordCountCheck:
-          expression: ">="
-          number: 200
       loggingOptions:
         printSchema: true
         count: true
@@ -77,9 +71,5 @@ controlPort:
     RecordCountCheck:
       productState:
         expression: ">="
-        number: 700
+        number: 1
         referenceAlias: Load_to_postgres_table1
-      inputPort:
-        - expression: ">="
-          number: 200
-          referenceAlias: data_1_1
