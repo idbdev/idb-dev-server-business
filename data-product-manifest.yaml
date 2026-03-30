@@ -3,9 +3,9 @@ jobName: Risk360
 jobType: Source Aligned Data Product
 developerId: 3af0876b-d886-4635-af06-b2ecb43da78e
 domain: business
-alias: Risk360
+alias: Risk36
 discoveryPort:
-  name: Risk360
+  name: Risk36
 inputPorts:
   - alias: User_-_Iceberg_1
     isDynamic: true
