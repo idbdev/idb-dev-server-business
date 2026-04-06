@@ -1,7 +1,7 @@
 jobId: "992"
 jobName: User Master - Iceberg to Iceberg
 jobType: Source Aligned Data Product
-developerId: f2228f41-8c2e-439a-807a-cdbaab7ef5b2
+developerId: 3af0876b-d886-4635-af06-b2ecb43da78e
 domain: business
 alias: load_all_columns_in_iceberg
 discoveryPort:
@@ -18,12 +18,6 @@ inputPorts:
       enforceSchema: false
       connection: S3 Connection
       dataSetUrn: urn:dv:dataset:c5d39982-f0c0-494f-845b-de70d026c29b
-      dataQualityCheck:
-        tableId: 1
-        enable: true
-        RecordCountCheck:
-          expression: ">="
-          number: 20000
       loggingOptions:
         printSchema: true
         count: true
@@ -58,7 +52,7 @@ productState:
   stateStoreType: loadDataIceberg
   isProfilingEnabled: true
   updateStrategy: Overwrite
-  tableName: iceberg_meta.user_master_on_iceberg
+  tableName: iceberg_meta.user_master_on_iceberg_2
   warehousePath: s3a://dataverse/dev_server/iceberg_warehouse_testing/
   catalogName: postgres_catalog
   optional:
@@ -88,26 +82,4 @@ transformation:
         showData: true
     type: operationThroughSqlQuery
 controlPort:
-  dataQualityRules:
-    NullValueCheck:
-      productState:
-        checks:
-          - column: Name
-        referenceAlias: load_all_columns_in_iceberg
-    UnacceptableTextValueCheck:
-      productState:
-        checks:
-          - column: Age
-            valueList:
-              - "0"
-            expression: ">="
-          - column: Age
-            valueList:
-              - "101"
-            expression: <=
-        referenceAlias: load_all_columns_in_iceberg
-    RecordCountCheck:
-      inputPort:
-        - expression: ">="
-          number: 20000
-          referenceAlias: User_-_Iceberg_1
+  dataQualityRules: {}
