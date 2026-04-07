@@ -3,9 +3,9 @@ jobName: User Master - Iceberg to Iceberg
 jobType: Source Aligned Data Product
 developerId: 3af0876b-d886-4635-af06-b2ecb43da78e
 domain: business
-alias: load_all_columns_in_iceberg
+alias: load_all_columns_in_iceberg_2
 discoveryPort:
-  name: User Master - Iceberg to Iceberg
+  name: User Master - Iceberg_to_Iceberg
 inputPorts:
   - alias: User_-_Iceberg_1
     isDynamic: true
