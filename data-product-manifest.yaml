@@ -11,6 +11,7 @@ discoveryPort:
 inputPorts:
   - alias: Kafka_dataset_1
     connection: "Kafka Conn"
+    path: s3a://dataverse/dummy-data/data_1.csv
     isDynamic: true
     topics: [
           "Streaming-Demo"
