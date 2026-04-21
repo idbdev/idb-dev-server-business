@@ -7,7 +7,7 @@ developerId: 3af0876b-d886-4635-af06-b2ecb43da78e
 domain: business
 alias: load_all_columns_in_iceberg_2
 discoveryPort:
-  name: SADP Real time
+  name: SADP Real time1
 inputPorts:
   - alias: Kafka_dataset_1
     connection: "Kafka Conn"
