@@ -11,7 +11,6 @@ discoveryPort:
 inputPorts:
   - alias: Kafka_dataset_1
     connection: "Kafka Conn"
-    path: s3a://dataverse/dummy-data/data_1.csv
     isDynamic: true
     topics: [
           "Streaming-Demo"
@@ -75,10 +74,10 @@ productState:
 transformation:
   - isDynamic: true
     alias: Spark_SQL_1
-    description: select all columns
+    description: select all columns from well_stream
     sequence: 2
     inputDataFrameList:
-      - inputDataFrame: Kafka_1
+      - inputDataFrame: kafka_dataset_1
         tempViewName: well_stream
     query: select * from well_stream
     optional:
