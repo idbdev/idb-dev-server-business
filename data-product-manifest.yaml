@@ -28,7 +28,7 @@ inputPorts:
         printSchema: true
         count: true
         showData: true
-    type: inputDelimited
+    type: kafka
     sequence: 1
 productState:
   isDynamic: true
