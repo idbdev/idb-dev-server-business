@@ -1,85 +1,64 @@
-jobId: "2232"
-jobName: well_telemetry_real_time
+# randomly took one manifest from marketplace
+jobId: "992"
+jobName: SADP Real time
 jobType: Source Aligned Data Product
-developerId: f2228f41-8c2e-439a-807a-cdbaab7ef5b2
+jobSubType: Streaming
+developerId: 3af0876b-d886-4635-af06-b2ecb43da78e
 domain: business
-alias: load_into_iceberg
+alias: load_all_columns_in_iceberg_2
 discoveryPort:
-  name: well_telemetry_real_time
+  name: SADP Real time
 inputPorts:
-  - alias: raw_well_telemetry_test_1
+  - alias: Kafka_dataset_1
+    connection: "Kafka Conn"
     isDynamic: true
-    tableName: iceberg_meta.raw_well_telemetry_test
-    warehousePath: s3a://dataverse/dev_server/iceberg_warehouse_testing/
-    catalogName: postgres_catalog
+    topics: [
+          "Streaming-Demo"
+        ]
     optional:
       persistDataFrame: false
-      catalogType: postgres
+      advanceOptions:
+        delimiter: ","
+      enableDataReconciliation: false
       enforceSchema: false
-      connection: S3 Kafka Stream
-      dataSetUrn: urn:dv:dataset:b646fb44-2a37-4b5b-8ba1-8bb99b879993
+      connection: Kafka Conn
+      dataSetUrn: urn:dv:dataset:982d8b1e-38d6-443a-8132-6711b020ebac
       loggingOptions:
         printSchema: true
         count: true
         showData: true
-    type: readDataIceberg
+    type: inputDelimited
+    sequence: 1
 productState:
   isDynamic: true
-  alias: load_into_iceberg
+  alias: load_all_columns_in_iceberg
   retentionVersions: ""
   logicalSchema:
     properties:
-      asset_id:
+      Name:
         type: STRING
-        description: Unique identifier of the oil & gas asset (well, pipeline, or rig)
-        sourceColumn: asset_id
-        sourceTable: kafka.oil_gas_events
-      event_time:
-        type: DATETIME
-        description: Timestamp when the sensor event was generated at the source system
-        sourceColumn: event_time
-        sourceTable: kafka.oil_gas_events
-      pressure_psi:
+        description: Name of the user
+        sourceColumn: Name
+        sourceTable: public.data_1
+      Age:
         type: STRING
-        description: Measured pressure value in pounds per square inch (PSI)
-        sourceColumn: pressure_psi
-        sourceTable: kafka.oil_gas_events
-      temperature_c:
+        description: Age of the user
+        sourceColumn: Age
+        sourceTable: public.data_1
+      City:
         type: STRING
-        description: Measured temperature in degrees Celsius
-        sourceColumn: temperature_c
-        sourceTable: kafka.oil_gas_events
-      flow_rate_bpd:
+        description: Location of the user
+        sourceColumn: City
+        sourceTable: public.data_1
+      Occupation:
         type: STRING
-        description: Oil or gas flow rate measured in barrels per day (BPD)
-        sourceColumn: flow_rate_bpd
-        sourceTable: kafka.oil_gas_events
-      status:
-        type: STRING
-        description: Operational status derived from sensor readings (NORMAL, WARNING,
-          CRITICAL)
-        sourceColumn: status
-        sourceTable: kafka.oil_gas_events
-      source_system:
-        type: STRING
-        description: Originating system or IoT gateway that produced the event
-        sourceColumn: source_system
-        sourceTable: kafka.oil_gas_events
-      batchId:
-        type: STRING
-        description: Spark Structured Streaming batch identifier for traceability
-        sourceColumn: batchId
-        sourceTable: spark.streaming_runtime
-      high_pressure_flag:
-        type: STRING
-        description: Derived flag indicating whether pressure exceeds the defined safety
-          threshold
-        sourceColumn: high_pressure_flag
-        sourceTable: spark.derived_column
+        description: Profession of the user
+        sourceColumn: Occupation
+        sourceTable: public.data_1
   stateStoreType: loadDataIceberg
   isProfilingEnabled: true
   updateStrategy: Append
-  tableName: iceberg_meta.sadp_well_telemetry_rt
+  tableName: iceberg_meta.april_test
   warehousePath: s3a://dataverse/dev_server/iceberg_warehouse_testing/
   catalogName: postgres_catalog
   optional:
@@ -88,21 +67,19 @@ productState:
     enforceSchema: true
     enforceSchemaMethod: Warning
     catalogType: postgres
-    connection: S3 Kafka Stream
     loggingOptions:
       printSchema: true
       count: true
-      showData: true
-  refreshInterval: 30 05 * * *
+  refreshInterval: 30 12 * * *
 transformation:
   - isDynamic: true
     alias: Spark_SQL_1
-    description: data transformation
+    description: select all columns
     sequence: 2
     inputDataFrameList:
-      - inputDataFrame: raw_well_telemetry_test_1
-        tempViewName: rwtt
-    query: select * from rwtt
+      - inputDataFrame: Kafka_1
+        tempViewName: well_stream
+    query: select * from well_stream
     optional:
       persistDataFrame: false
       loggingOptions:
