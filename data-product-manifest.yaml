@@ -9,6 +9,7 @@ alias: load_all_columns_in_iceberg_yamini
 discoveryPort:
   name: SADP Real time yamini
 inputPorts:
+streamingInputPorts:
   - alias: Kafka_dataset_1
     connection: "Kafka Conn"
     isDynamic: true
