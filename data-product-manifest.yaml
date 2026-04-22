@@ -16,6 +16,43 @@ streamingInputPorts:
     topics: [
           "Streaming-Demo"
         ]
+    schema: [
+          {
+             "columnName": "event_time",
+             "dataType": "String",
+             "nullable": true
+           },
+           {
+             "columnName": "asset_id",
+             "dataType": "String",
+             "nullable": true
+           },
+           {
+             "columnName": "pressure_psi",
+             "dataType": "Double",
+             "nullable": true
+           },
+           {
+             "columnName": "temperature_c",
+             "dataType": "Double",
+             "nullable": true
+           },
+           {
+             "columnName": "flow_rate_bpd",
+             "dataType": "Double",
+             "nullable": true
+           },
+           {
+             "columnName": "status",
+             "dataType": "String",
+             "nullable": true
+           },
+           {
+             "columnName": "source_system",
+             "dataType": "String",
+             "nullable": true
+           }
+    ]
     optional:
       persistDataFrame: false
       advanceOptions:
@@ -68,6 +105,7 @@ productState:
     enforceSchema: true
     enforceSchemaMethod: Warning
     catalogType: postgres
+    connection: "S3 Connection"
     loggingOptions:
       printSchema: true
       count: true
