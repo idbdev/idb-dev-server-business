@@ -39,8 +39,7 @@ streamingInputPorts:
           nullable: true
     optional:
       persistDataFrame: false
-      advanceOptions:
-        delimiter: ","
+      advanceOptions: []
       enableDataReconciliation: false
       enforceSchema: false
       connection: Kafka Conn
