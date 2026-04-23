@@ -98,4 +98,11 @@ transformation:
         showData: true
     type: operationThroughSqlQuery
 controlPort:
-  dataQualityRules: {}
+  dataQualityRules:
+    NullValueCheck:
+      productState:
+        checks:
+          - column: age
+            expression: ">="
+            number: 18
+        referenceAlias: load_data_into_iceberg
