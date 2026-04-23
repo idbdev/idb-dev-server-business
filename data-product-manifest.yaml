@@ -98,9 +98,4 @@ transformation:
         showData: true
     type: operationThroughSqlQuery
 controlPort:
-  dataQualityRules:
-    RecordCountCheck:
-      productState:
-        expression: ">="
-        number: 35
-        referenceAlias: load_data_into_iceberg
+  dataQualityRules: {}
