@@ -1,0 +1,106 @@
+jobId: "2545"
+jobName: Filter_Test_Pipeline
+jobType: Source Aligned Data Product
+developerId: f2228f41-8c2e-439a-807a-cdbaab7ef5b2
+domain: business
+alias: load_data_into_iceberg
+discoveryPort:
+  name: Filter_Test_Pipeline
+inputPorts:
+  - alias: S3_dataset_vishwa_1
+    isDynamic: true
+    path: s3a://dataverse/dummy-data/customer.csv
+    optional:
+      persistDataFrame: false
+      advanceOptions:
+        delimiter: ","
+      enableDataReconciliation: false
+      enforceSchema: false
+      connection: S3 Connection Vishwa
+      dataSetUrn: urn:dv:dataset:cf518173-1bcf-42a0-8dcf-a45a35f75d7e
+      loggingOptions:
+        printSchema: true
+        count: true
+        showData: true
+    type: inputDelimited
+productState:
+  isDynamic: true
+  alias: load_data_into_iceberg
+  retentionVersions: ""
+  logicalSchema:
+    properties:
+      cid:
+        type: STRING
+        description: Unique identifier for each customer
+        sourceColumn: cid
+        sourceTable: public.customers
+      fname:
+        type: STRING
+        description: First name of the customer
+        sourceColumn: fname
+        sourceTable: public.customers
+      lname:
+        type: STRING
+        description: Last name of the customer
+        sourceColumn: lname
+        sourceTable: public.customers
+      age:
+        type: STRING
+        description: Age of the customer
+        sourceColumn: age
+        sourceTable: public.customers
+      email:
+        type: STRING
+        description: Email address of the customer
+        sourceColumn: email
+        sourceTable: public.customers
+      phone:
+        type: STRING
+        description: Contact phone number of the customer
+        sourceColumn: phone
+        sourceTable: public.customers
+      city:
+        type: STRING
+        description: City where the customer resides
+        sourceColumn: city
+        sourceTable: public.customers
+  stateStoreType: loadDataIceberg
+  isProfilingEnabled: true
+  updateStrategy: Overwrite
+  tableName: iceberg_meta.customer_test
+  warehousePath: s3a://dataverse/dev_server/iceberg_warehouse_testing/
+  catalogName: postgres_catalog
+  optional:
+    persistDataFrame: false
+    enableDataReconciliation: false
+    enforceSchema: true
+    enforceSchemaMethod: Warning
+    catalogType: postgres
+    loggingOptions:
+      printSchema: true
+      count: true
+      showData: true
+  refreshInterval: 30 12 * * *
+transformation:
+  - isDynamic: true
+    alias: Spark_SQL_1
+    description: using spark sql comp
+    sequence: 2
+    inputDataFrameList:
+      - inputDataFrame: S3_dataset_vishwa_1
+        tempViewName: temp
+    query: select * from temp
+    optional:
+      persistDataFrame: false
+      loggingOptions:
+        printSchema: true
+        count: true
+        showData: true
+    type: operationThroughSqlQuery
+controlPort:
+  dataQualityRules:
+    RecordCountCheck:
+      productState:
+        expression: ">="
+        number: 35
+        referenceAlias: load_data_into_iceberg
