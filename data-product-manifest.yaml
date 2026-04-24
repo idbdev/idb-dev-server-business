@@ -7,7 +7,7 @@ developerId: 3af0876b-d886-4635-af06-b2ecb43da78e
 domain: business
 alias: load_all_columns_in_iceberg_yamini
 discoveryPort:
-  name: SADP Real time yamini
+  name: SADP Real time yamini_1.1
 inputPorts: []
 streamingInputPorts:
   - alias: kafka_dataset_1
