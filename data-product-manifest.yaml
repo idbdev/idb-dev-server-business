@@ -110,8 +110,8 @@ transformation:
         showData: true
     type: operationThroughSqlQuery
 controlPort:
-  dataQualityRules: 
-   NullValueCheck:
+  dataQualityRules:
+    NullValueCheck:
       productState:
         checks:
           - column: VIN
@@ -121,3 +121,4 @@ controlPort:
         checks:
           - column: VIN
         referenceAlias: loading_market_quality_data
+    
