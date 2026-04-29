@@ -56,22 +56,37 @@ productState:
   retentionVersions: ""
   logicalSchema:
     properties:
-      Name:
+      event_time:
         type: STRING
         description: Name of the user
         sourceColumn: Name
         sourceTable: public.data_1
-      Age:
+      asset_id:
         type: STRING
         description: Age of the user
         sourceColumn: Age
         sourceTable: public.data_1
-      City:
+      pressure_psi:
         type: STRING
         description: Location of the user
         sourceColumn: City
         sourceTable: public.data_1
-      Occupation:
+      temperature_c:
+        type: STRING
+        description: Profession of the user
+        sourceColumn: Occupation
+        sourceTable: public.data_1
+      flow_rate_bpd:
+        type: STRING
+        description: Profession of the user
+        sourceColumn: Occupation
+        sourceTable: public.data_1
+      status:
+        type: STRING
+        description: Profession of the user
+        sourceColumn: Occupation
+        sourceTable: public.data_1
+      source_system:
         type: STRING
         description: Profession of the user
         sourceColumn: Occupation
