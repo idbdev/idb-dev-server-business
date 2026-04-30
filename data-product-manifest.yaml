@@ -94,7 +94,7 @@ productState:
   stateStoreType: loadDataIceberg
   isProfilingEnabled: true
   updateStrategy: Append
-  tableName: iceberg_meta.april_testA
+  tableName: iceberg_meta.april_test
   warehousePath: s3a://dataverse/dev_server/iceberg_warehouse_testing/
   catalogName: postgres_catalog
   optional:
