@@ -1,0 +1,72 @@
+jobId: "2480"
+jobName: pyspark_scheduling_check
+jobType: Source Aligned Data Product
+developerId: 7f096247-19a8-4865-bc66-600180317b87
+domain: business
+alias: load_for_statemeangement_scheduling
+discoveryPort:
+  name: pyspark_scheduling_check
+inputPorts:
+  - alias: data_2_1
+    isDynamic: true
+    connection: Postgres
+    tableName/query: data_2
+    optional:
+      persistDataFrame: false
+      enableDataReconciliation: false
+      enforceSchema: false
+      dataSetUrn: urn:dv:dataset:faa03fb5-a145-4b8e-985b-90ffb96b1e27
+    type: readPostGreSqlDbUsingJdbc
+productState:
+  persistDataFrame: false
+  catalogType: postgres
+  enforceSchema: true
+  connection: S3 Connection
+  stepName: load for statemeangement scheduling
+  tableName: iceberg_meta.pyspark_regressive
+  warehousePath: s3a://dataverse/iceberg_warehouse_testing/
+  catalogName: postgres_catalog
+  type: readDataIceberg
+  isStateManagement: true
+  sequence: 3
+  alias: load_for_statemeangement_scheduling
+  refreshInterval: None
+  retentionVersions: ""
+  logicalSchema:
+    properties:
+      Name:
+        type: STRING
+        description: Name of the user
+        sourceColumn: Name
+        sourceTable: public.data_1
+      Age:
+        type: STRING
+        description: Age of the user
+        sourceColumn: Age
+        sourceTable: public.data_1
+      City:
+        type: STRING
+        description: Location of the user
+        sourceColumn: City
+        sourceTable: public.data_1
+      Occupation:
+        type: STRING
+        description: Profession of the user
+        sourceColumn: Occupation
+        sourceTable: public.data_1
+  enforceSchemaMethod: ""
+  isProfilingEnabled: false
+transformation:
+  - isDynamic: true
+    alias: EMR_PySpark_1
+    description: transform for scheduling
+    sequence: 2
+    arguments: []
+    pythonFilePath: /home/ec2-user/pyspark_utilities/postgres_to_iceberg_postgres_catalog_pyspark_script.py
+    inputDataFrameList:
+      - inputDataFrame: data_2_1
+        tempViewName: ""
+    optional: {}
+    type: customPySparkEMRServerless
+controlPort:
+  dataQualityRules: {}
