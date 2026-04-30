@@ -2,7 +2,7 @@
 jobId: "992"
 jobName: SADP Real time
 jobType: Source Aligned Data Product
-jobSubType: Streaming
+jobSubType: streaming
 developerId: 3af0876b-d886-4635-af06-b2ecb43da78e
 domain: business
 alias: load_all_columns_in_iceberg_yamini
@@ -14,7 +14,7 @@ streamingInputPorts:
     connection: "Kafka Conn"
     isDynamic: true
     topics: 
-        - Streaming-Demo
+        - Streaming-Demo-Marketplace
     schema: 
         - columnName: event_time
           dataType: String
