@@ -1,0 +1,52 @@
+jobId: "2571"
+jobName: API_TEST_PIPELINE_CHANGED
+jobType: Source Aligned Data Product
+developerId: f2228f41-8c2e-439a-807a-cdbaab7ef5b2
+domain: business
+alias: ""
+discoveryPort:
+  name: API_TEST_PIPELINE_CHANGED
+inputPorts:
+  - alias: S3_dataset_vishwa_1
+    isDynamic: true
+    path: s3a://dataverse/dummy-data/customer.csv
+    optional:
+      persistDataFrame: false
+      advanceOptions:
+        delimiter: ","
+      enableDataReconciliation: false
+      enforceSchema: false
+      connection: S3 Connection Vishwa
+      dataSetUrn: urn:dv:dataset:cf518173-1bcf-42a0-8dcf-a45a35f75d7e
+    type: inputDelimited
+productState:
+  isDynamic: true
+  alias: ""
+  retentionVersions: ""
+  logicalSchema: ""
+  stateStoreType: loadDataIceberg
+  isProfilingEnabled: false
+  tableName: ""
+  warehousePath: ""
+  catalogName: ""
+  optional:
+    persistDataFrame: false
+    enableDataReconciliation: false
+    enforceSchema: true
+    enforceSchemaMethod: Warning
+    catalogType: glue
+  refreshInterval: 23 12 * * *
+transformation:
+  - isDynamic: true
+    alias: Spark_SQL_1
+    description: ""
+    sequence: 2
+    inputDataFrameList:
+      - inputDataFrame: S3_dataset_vishwa_1
+        tempViewName: ""
+    query: ""
+    optional:
+      persistDataFrame: false
+    type: operationThroughSqlQuery
+controlPort:
+  dataQualityRules: {}
