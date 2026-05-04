@@ -4,7 +4,7 @@ jobType: Source Aligned Data Product
 jobSubType: streaming
 developerId: f2228f41-8c2e-439a-807a-cdbaab7ef5b2
 domain: business
-alias: load_into_inceberg
+alias: load_into_iceberg_kafka_test_4
 discoveryPort:
   name: Kafka Stream Test 4
 inputPorts: []
@@ -47,7 +47,7 @@ streamingInputPorts:
     sequence: 1
 productState:
   isDynamic: true
-  alias: load_into_inceberg
+  alias: load_into_iceberg_kafka_test_4
   retentionVersions: ""
   logicalSchema:
     properties:
