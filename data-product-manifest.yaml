@@ -1,0 +1,90 @@
+jobId: "2576"
+jobName: Kafka Stream Test 6
+jobType: Source Aligned Data Product
+developerId: f2228f41-8c2e-439a-807a-cdbaab7ef5b2
+domain: business
+alias: loading_kafka_stream_6_into_iceberg
+discoveryPort:
+  name: Kafka Stream Test 6
+inputPorts: []
+productState:
+  isDynamic: true
+  alias: loading_kafka_stream_6_into_iceberg
+  retentionVersions: ""
+  logicalSchema:
+    properties:
+      asset_id:
+        type: STRING
+        description: Unique identifier of the oil & gas asset (well, pipeline, or rig)
+        sourceColumn: asset_id
+        sourceTable: kafka.oil_gas_events
+      event_time:
+        type: DATETIME
+        description: Timestamp when the sensor event was generated at the source system
+        sourceColumn: event_time
+        sourceTable: kafka.oil_gas_events
+      pressure_psi:
+        type: STRING
+        description: Measured pressure value in pounds per square inch (PSI)
+        sourceColumn: pressure_psi
+        sourceTable: kafka.oil_gas_events
+      temperature_c:
+        type: STRING
+        description: Measured temperature in degrees Celsius
+        sourceColumn: temperature_c
+        sourceTable: kafka.oil_gas_events
+      flow_rate_bpd:
+        type: STRING
+        description: Oil or gas flow rate measured in barrels per day (BPD)
+        sourceColumn: flow_rate_bpd
+        sourceTable: kafka.oil_gas_events
+      status:
+        type: STRING
+        description: Operational status derived from sensor readings (NORMAL, WARNING,
+          CRITICAL)
+        sourceColumn: status
+        sourceTable: kafka.oil_gas_events
+      source_system:
+        type: STRING
+        description: Originating system or IoT gateway that produced the event
+        sourceColumn: source_system
+        sourceTable: kafka.oil_gas_events
+      batchId:
+        type: STRING
+        description: Spark Structured Streaming batch identifier for traceability
+        sourceColumn: batchId
+        sourceTable: spark.streaming_runtime
+      high_pressure_flag:
+        type: STRING
+        description: Derived flag indicating whether pressure exceeds the defined safety
+          threshold
+        sourceColumn: high_pressure_flag
+        sourceTable: spark.derived_column
+  stateStoreType: loadDataIceberg
+  isProfilingEnabled: false
+  updateStrategy: Append
+  tableName: iceberg_meta.sadp_kafka_stream_6
+  warehousePath: s3a://dataverse/dev_server/iceberg_warehouse_testing/
+  catalogName: postgres_catalog
+  optional:
+    persistDataFrame: false
+    enableDataReconciliation: false
+    enforceSchema: true
+    enforceSchemaMethod: Warning
+    catalogType: postgres
+    connection: S3 Connection
+  refreshInterval: 23 12 * * *
+transformation:
+  - isDynamic: true
+    alias: Spark_SQL_1
+    description: transform
+    sequence: 2
+    inputDataFrameList:
+      - inputDataFrame: kafka_dataset_1
+        tempViewName: temp
+    query: select * from temp
+    optional:
+      persistDataFrame: false
+    type: operationThroughSqlQuery
+controlPort:
+  dataQualityRules: {}
