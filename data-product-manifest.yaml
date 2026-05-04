@@ -1,12 +1,46 @@
 jobId: "2576"
 jobName: Kafka Stream Test 6
 jobType: Source Aligned Data Product
+jobSubType: streaming
 developerId: f2228f41-8c2e-439a-807a-cdbaab7ef5b2
 domain: business
 alias: loading_kafka_stream_6_into_iceberg
 discoveryPort:
   name: Kafka Stream Test 6
 inputPorts: []
+streamingInputPorts:
+  - alias: kafka_dataset_1
+    isDynamic: true
+    connection: Kafka Conn
+    topics:
+      - test-topic
+    schema:
+      - columnName: event_time
+        dataType: String
+        nullable: true
+      - columnName: asset_id
+        dataType: String
+        nullable: true
+      - columnName: pressure_psi
+        dataType: Double
+        nullable: true
+      - columnName: temperature_c
+        dataType: Double
+        nullable: true
+      - columnName: flow_rate_bpd
+        dataType: Double
+        nullable: true
+      - columnName: status
+        dataType: String
+        nullable: true
+      - columnName: source_system
+        dataType: String
+        nullable: true
+    optional:
+      advanceOptions:
+        failOnDataLoss: true
+    type: kafkaStream
+    sequence: 1
 productState:
   isDynamic: true
   alias: loading_kafka_stream_6_into_iceberg
