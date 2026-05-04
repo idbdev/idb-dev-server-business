@@ -1,12 +1,50 @@
 jobId: "2568"
 jobName: Kafka Stream Test 4
 jobType: Source Aligned Data Product
+jobSubType: streaming
 developerId: f2228f41-8c2e-439a-807a-cdbaab7ef5b2
 domain: business
-alias: load_into_iceberg_kafka_test_4
+alias: load_into_inceberg
 discoveryPort:
   name: Kafka Stream Test 4
 inputPorts: []
+streamingInputPorts:
+  - alias: kafka_dataset_1
+    isDynamic: true
+    connection: Kafka Conn
+    topics:
+      - test-topic
+    schema:
+      - columnName: event_time
+        dataType: String
+        nullable: true
+      - columnName: asset_id
+        dataType: String
+        nullable: true
+      - columnName: pressure_psi
+        dataType: Double
+        nullable: true
+      - columnName: temperature_c
+        dataType: Double
+        nullable: true
+      - columnName: flow_rate_bpd
+        dataType: Double
+        nullable: true
+      - columnName: status
+        dataType: String
+        nullable: true
+      - columnName: source_system
+        dataType: String
+        nullable: true
+    optional:
+      advanceOptions:
+        failOnDataLoss: true
+      loggingOptions:
+        printSchema: true
+        count: true
+        showData: true
+    type: kafkaStream
+    sequence: 1
 productState:
   isDynamic: true
   alias: load_into_inceberg
