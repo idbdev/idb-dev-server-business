@@ -129,11 +129,11 @@ controlPort:
     NullValueCheck:
       productState:
         checks:
-          - column: VIN
+          - column: event_time
         referenceAlias: loading_market_quality_data
     UniquenessCheck:
       productState:
         checks:
-          - column: VIN
+          - column: event_time
         referenceAlias: loading_market_quality_data
     
