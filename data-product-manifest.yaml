@@ -5,9 +5,9 @@ jobType: Source Aligned Data Product
 jobSubType: streaming
 developerId: 3af0876b-d886-4635-af06-b2ecb43da78e
 domain: business
-alias: load_all_columns_in_iceberg_yamini
+alias: load_all_columns_in_iceberg_yamini_1
 discoveryPort:
-  name: SADP Real time yamini_1.1
+  name: SADP Real time yamini_1.1_1
 inputPorts: []
 streamingInputPorts:
   - alias: kafka_dataset_1
