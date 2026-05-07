@@ -130,10 +130,10 @@ controlPort:
       productState:
         checks:
           - column: event_time
-        referenceAlias: loading_market_quality_data
+        referenceAlias: load_all_columns_in_iceberg
     UniquenessCheck:
       productState:
         checks:
           - column: event_time
-        referenceAlias: loading_market_quality_data
+        referenceAlias: load_all_columns_in_iceberg
     
