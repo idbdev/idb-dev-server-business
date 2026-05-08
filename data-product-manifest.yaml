@@ -1,0 +1,258 @@
+jobId: "1087"
+jobName: Global Supply Chain And Manufacturing Quality
+jobType: Source Aligned Data Product
+developerId: 42825798-b98f-41c3-954a-c0722b747faf
+domain: supply_chain
+alias: loading_Global_Supply_Chain_And_Manufacturing_Quality_Data_in_iceberg
+discoveryPort:
+  name: Global Supply Chain And Manufacturing Quality
+inputPorts:
+  - alias: Batch_Records_1
+    isDynamic: true
+    path: s3a://dataverse/testbed/bioc/STG_BATCH_RECORDS.csv
+    optional:
+      persistDataFrame: false
+      advanceOptions:
+        delimiter: ","
+      enableDataReconciliation: false
+      enforceSchema: false
+      connection: S3 Connection - Lifesciences
+      dataSetUrn: urn:dv:dataset:453478fb-09c5-4a24-8f00-ac121701fcb8
+    type: inputDelimited
+  - alias: Equipment_Oee_1
+    isDynamic: true
+    path: s3a://dataverse/testbed/bioc/STG_EQUIPMENT_OEE.csv
+    optional:
+      persistDataFrame: false
+      advanceOptions:
+        delimiter: ","
+      enableDataReconciliation: false
+      enforceSchema: false
+      connection: S3 Connection - Lifesciences
+      dataSetUrn: urn:dv:dataset:452415c4-37df-4d2d-810e-63e39404a8bf
+    type: inputDelimited
+  - alias: Quality_Events_1
+    isDynamic: true
+    path: s3a://dataverse/testbed/bioc/STG_QUALITY_EVENTS.csv
+    optional:
+      persistDataFrame: false
+      advanceOptions:
+        delimiter: ","
+      enableDataReconciliation: false
+      enforceSchema: false
+      connection: S3 Connection - Lifesciences
+      dataSetUrn: urn:dv:dataset:ad7cb93d-993c-4e88-a634-33a0601bc691
+    type: inputDelimited
+productState:
+  isDynamic: true
+  alias: loading_Global_Supply_Chain_And_Manufacturing_Quality_Data_in_iceberg
+  retentionVersions: ""
+  logicalSchema:
+    properties:
+      BATCH_ID:
+        type: STRING
+        description: Unique identifier for the manufacturing batch
+        sourceColumn: BATCH_ID
+        sourceTable: BATCH_RECORDS
+      PRODUCT_NAME:
+        type: STRING
+        description: Name of the product being manufactured in the batch
+        sourceColumn: PRODUCT_NAME
+        sourceTable: BATCH_RECORDS
+      MANUFACTURING_SITE:
+        type: STRING
+        description: Physical manufacturing facility location (e.g., Bangalore Plant 1)
+        sourceColumn: MANUFACTURING_SITE
+        sourceTable: BATCH_RECORDS
+      BATCH_SIZE:
+        type: STRING
+        description: Quantity produced in the batch
+        sourceColumn: BATCH_SIZE
+        sourceTable: BATCH_RECORDS
+      BATCH_SIZE_UOM:
+        type: STRING
+        description: Unit of measure for batch size (e.g., mg, L)
+        sourceColumn: BATCH_SIZE_UOM
+        sourceTable: BATCH_RECORDS
+      BATCH_START:
+        type: STRING
+        description: Timestamp when batch manufacturing began
+        sourceColumn: START_DATE
+        sourceTable: BATCH_RECORDS
+      BATCH_END:
+        type: STRING
+        description: Timestamp when batch manufacturing completed
+        sourceColumn: END_DATE
+        sourceTable: BATCH_RECORDS
+      YIELD_PERCENT:
+        type: STRING
+        description: Manufacturing yield percentage for the batch
+        sourceColumn: YIELD_PERCENT
+        sourceTable: BATCH_RECORDS
+      BATCH_STATUS:
+        type: STRING
+        description: Current batch status (Released, Under Review, Rejected)
+        sourceColumn: STATUS
+        sourceTable: BATCH_RECORDS
+      GMP_COMPLIANT:
+        type: STRING
+        description: Whether the batch meets Good Manufacturing Practice standards
+        sourceColumn: GMP_COMPLIANT
+        sourceTable: BATCH_RECORDS
+      DEVIATION_COUNT:
+        type: STRING
+        description: Number of manufacturing deviations recorded for the batch
+        sourceColumn: DEVIATION_COUNT
+        sourceTable: BATCH_RECORDS
+      RELEASE_DATE:
+        type: STRING
+        description: Date the batch was released for distribution
+        sourceColumn: RELEASE_DATE
+        sourceTable: BATCH_RECORDS
+      EXPIRY_DATE:
+        type: STRING
+        description: Expiration date of the manufactured batch
+        sourceColumn: EXPIRY_DATE
+        sourceTable: BATCH_RECORDS
+      EQUIPMENT_ID:
+        type: STRING
+        description: Unique identifier for the manufacturing equipment
+        sourceColumn: EQUIPMENT_ID
+        sourceTable: EQUIPMENT_OEE
+      EQUIPMENT_NAME:
+        type: STRING
+        description: Descriptive name of the equipment (e.g., Bioreactor BR-2000L)
+        sourceColumn: EQUIPMENT_NAME
+        sourceTable: EQUIPMENT_OEE
+      MEASUREMENT_DATE:
+        type: STRING
+        description: Date when OEE metrics were measured
+        sourceColumn: MEASUREMENT_DATE
+        sourceTable: EQUIPMENT_OEE
+      AVAILABILITY_PERCENT:
+        type: STRING
+        description: Equipment availability rate as a percentage
+        sourceColumn: AVAILABILITY_PERCENT
+        sourceTable: EQUIPMENT_OEE
+      PERFORMANCE_PERCENT:
+        type: STRING
+        description: Equipment performance rate as a percentage
+        sourceColumn: PERFORMANCE_PERCENT
+        sourceTable: EQUIPMENT_OEE
+      QUALITY_PERCENT:
+        type: STRING
+        description: Equipment quality rate as a percentage
+        sourceColumn: QUALITY_PERCENT
+        sourceTable: EQUIPMENT_OEE
+      OEE_PERCENT:
+        type: STRING
+        description: "Overall Equipment Effectiveness: (Availability Performance
+          Quality) / 10000"
+        sourceColumn: OEE_PERCENT
+        sourceTable: EQUIPMENT_OEE
+      DOWNTIME_HOURS:
+        type: STRING
+        description: Total hours of equipment downtime
+        sourceColumn: DOWNTIME_HOURS
+        sourceTable: EQUIPMENT_OEE
+      MAINTENANCE_TYPE:
+        type: STRING
+        description: Type of maintenance performed (Preventive, Corrective)
+        sourceColumn: MAINTENANCE_TYPE
+        sourceTable: EQUIPMENT_OEE
+      QUALITY_EVENT_ID:
+        type: STRING
+        description: Unique identifier for the quality event
+        sourceColumn: EVENT_ID
+        sourceTable: QUALITY_EVENTS
+      QUALITY_EVENT_TYPE:
+        type: STRING
+        description: Type of quality event (Deviation, OOS, Complaint)
+        sourceColumn: EVENT_TYPE
+        sourceTable: QUALITY_EVENTS
+      QUALITY_EVENT_SEVERITY:
+        type: STRING
+        description: Severity classification of the event (Minor, Major, Critical)
+        sourceColumn: SEVERITY
+        sourceTable: QUALITY_EVENTS
+      QUALITY_EVENT_STATUS:
+        type: STRING
+        description: Current status of the quality event (Open, Closed, Under Investigation)
+        sourceColumn: STATUS
+        sourceTable: QUALITY_EVENTS
+      ROOT_CAUSE:
+        type: STRING
+        description: Identified root cause of the quality event
+        sourceColumn: ROOT_CAUSE
+        sourceTable: QUALITY_EVENTS
+      CAPA_ID:
+        type: STRING
+        description: Corrective and Preventive Action identifier linked to the quality event
+        sourceColumn: CAPA_ID
+        sourceTable: QUALITY_EVENTS
+  stateStoreType: loadDataIceberg
+  isProfilingEnabled: true
+  updateStrategy: Overwrite
+  tableName: iceberg_meta.Global_Supply_Chain_And_Manufacturing_Quality_1
+  warehousePath: s3a://dataverse/testbed_load/
+  catalogName: postgres_catalog
+  optional:
+    persistDataFrame: false
+    enableDataReconciliation: false
+    enforceSchema: true
+    enforceSchemaMethod: Warning
+    catalogType: postgres
+    connection: S3 Connection - Lifesciences
+    loggingOptions:
+      printSchema: true
+  refreshInterval: 30 5 * * *
+transformation:
+  - isDynamic: true
+    alias: Transform
+    description: Transforming Global Supply Chain And Manufacturing Quality
+    sequence: 4
+    inputDataFrameList:
+      - inputDataFrame: Quality_Events_1
+        tempViewName: QUALITY_EVENTS
+      - inputDataFrame: Batch_Records_1
+        tempViewName: BATCH_RECORDS
+      - inputDataFrame: Equipment_Oee_1
+        tempViewName: EQUIPMENT_OEE
+    query: SELECT br.BATCH_ID, br.PRODUCT_NAME, br.MANUFACTURING_SITE,
+      br.BATCH_SIZE, br.BATCH_SIZE_UOM, br.START_DATE AS BATCH_START,
+      br.END_DATE AS BATCH_END, br.YIELD_PERCENT, br.STATUS AS BATCH_STATUS,
+      br.GMP_COMPLIANT, br.DEVIATION_COUNT, br.RELEASE_DATE, br.EXPIRY_DATE,
+      eo.EQUIPMENT_ID, eo.EQUIPMENT_NAME, eo.MEASUREMENT_DATE,
+      eo.AVAILABILITY_PERCENT, eo.PERFORMANCE_PERCENT, eo.QUALITY_PERCENT,
+      eo.OEE_PERCENT, eo.DOWNTIME_HOURS, eo.MAINTENANCE_TYPE, qe.EVENT_ID AS
+      QUALITY_EVENT_ID, qe.EVENT_TYPE AS QUALITY_EVENT_TYPE, qe.SEVERITY AS
+      QUALITY_EVENT_SEVERITY, qe.STATUS AS QUALITY_EVENT_STATUS, qe.ROOT_CAUSE,
+      qe.CAPA_ID FROM BATCH_RECORDS br LEFT JOIN EQUIPMENT_OEE eo ON
+      br.MANUFACTURING_SITE = eo.MANUFACTURING_SITE LEFT JOIN QUALITY_EVENTS qe
+      ON br.BATCH_ID = qe.BATCH_ID
+    optional:
+      persistDataFrame: false
+      loggingOptions:
+        printSchema: true
+    type: operationThroughSqlQuery
+controlPort:
+  dataQualityRules:
+    NullValueCheck:
+      productState:
+        checks:
+          - column: YIELD_PERCENT
+          - column: BATCH_STATUS
+        referenceAlias: loading_Global_Supply_Chain_And_Manufacturing_Quality_Data_in_iceberg
+    NullCombinationCheck:
+      productState:
+        checks:
+          - columns:
+              - YIELD_PERCENT
+            expression: <=
+            number: 25
+        referenceAlias: loading_Global_Supply_Chain_And_Manufacturing_Quality_Data_in_iceberg
+    UniquenessCheck:
+      productState:
+        checks:
+          - column: BATCH_ID
+        referenceAlias: loading_Global_Supply_Chain_And_Manufacturing_Quality_Data_in_iceberg
