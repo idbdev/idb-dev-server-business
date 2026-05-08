@@ -253,11 +253,11 @@ controlPort:
           - column: PROGRAM_ID
             valueList:
               - xyz
-            expression: "!="
-            number: 1
+            expression: ">"
+            number: 0
           - column: PROGRAM_NAME
             valueList:
               - zcx
-            expression: ">="
+            expression: ">"
             number: 0
         referenceAlias: loading_RND_Pipeline_And_Biologics_Research_data_in_iceberg
