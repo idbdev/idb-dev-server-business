@@ -254,7 +254,7 @@ controlPort:
             valueList:
               - xyz
             expression: ">"
-            number: 0
+            number: 1
           - column: PROGRAM_NAME
             valueList:
               - zcx
