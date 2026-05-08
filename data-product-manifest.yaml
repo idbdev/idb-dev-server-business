@@ -254,4 +254,5 @@ controlPort:
             valueList:
               - xyz
             expression: "!="
+            number: 1
         referenceAlias: loading_RND_Pipeline_And_Biologics_Research_data_in_iceberg
