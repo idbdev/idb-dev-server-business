@@ -1,7 +1,7 @@
 jobId: "985"
 jobName: manufacturing copy
 jobType: Source Aligned Data Product
-developerId: ff1e83f8-6db7-4b09-a651-d18cef6d6cf9
+developerId: e57fd089-0c45-4273-8d8d-92f488de08b7
 domain: business
 alias: loading
 discoveryPort:
@@ -16,14 +16,50 @@ inputPorts:
         delimiter: ","
       enableDataReconciliation: false
       enforceSchema: false
-      connection: test-connection
+      connection: test-s3-connection
       dataSetUrn: urn:dv:dataset:b379b744-ddf1-46b6-9b12-453639751f32
     type: inputDelimited
 productState:
   isDynamic: true
   alias: loading
   retentionVersions: ""
-  logicalSchema: ""
+  logicalSchema:
+    properties:
+      cid:
+        type: STRING
+        description: Unique identifier for each customer
+        sourceColumn: cid
+        sourceTable: public.customers
+      fname:
+        type: STRING
+        description: First name of the customer
+        sourceColumn: fname
+        sourceTable: public.customers
+      lname:
+        type: STRING
+        description: Last name of the customer
+        sourceColumn: lname
+        sourceTable: public.customers
+      age:
+        type: STRING
+        description: Age of the customer
+        sourceColumn: age
+        sourceTable: public.customers
+      email:
+        type: STRING
+        description: Email address of the customer
+        sourceColumn: email
+        sourceTable: public.customers
+      phone:
+        type: STRING
+        description: Contact phone number of the customer
+        sourceColumn: phone
+        sourceTable: public.customers
+      city:
+        type: STRING
+        description: City where the customer resides
+        sourceColumn: city
+        sourceTable: public.customers
   stateStoreType: loadDataIceberg
   isProfilingEnabled: false
   updateStrategy: Overwrite
@@ -33,7 +69,7 @@ productState:
   optional:
     persistDataFrame: false
     enableDataReconciliation: false
-    enforceSchema: false
+    enforceSchema: true
     enforceSchemaMethod: Warning
     catalogType: postgres
   refreshInterval: 30 12 * * *
