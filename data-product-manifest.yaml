@@ -1,0 +1,53 @@
+jobId: "985"
+jobName: manufacturing copy
+jobType: Source Aligned Data Product
+developerId: ff1e83f8-6db7-4b09-a651-d18cef6d6cf9
+domain: business
+alias: loading
+discoveryPort:
+  name: manufacturing copy
+inputPorts:
+  - alias: test_1
+    isDynamic: true
+    path: s3a://dataverse/dummy-data/customer.csv
+    optional:
+      persistDataFrame: false
+      advanceOptions:
+        delimiter: ","
+      enableDataReconciliation: false
+      enforceSchema: false
+      connection: test-connection
+      dataSetUrn: urn:dv:dataset:b379b744-ddf1-46b6-9b12-453639751f32
+    type: inputDelimited
+productState:
+  isDynamic: true
+  alias: loading
+  retentionVersions: ""
+  logicalSchema: ""
+  stateStoreType: loadDataIceberg
+  isProfilingEnabled: false
+  updateStrategy: Overwrite
+  tableName: iceberg_meta.testTable
+  warehousePath: s3a://dataverse/dev_server/iceberg_warehouse_testing/
+  catalogName: postgres_catalog
+  optional:
+    persistDataFrame: false
+    enableDataReconciliation: false
+    enforceSchema: false
+    enforceSchemaMethod: Warning
+    catalogType: postgres
+  refreshInterval: 30 12 * * *
+transformation:
+  - isDynamic: true
+    alias: Spark_SQL_1
+    description: step2
+    sequence: 2
+    inputDataFrameList:
+      - inputDataFrame: test_1
+        tempViewName: temp
+    query: select * from temp
+    optional:
+      persistDataFrame: false
+    type: operationThroughSqlQuery
+controlPort:
+  dataQualityRules: {}
