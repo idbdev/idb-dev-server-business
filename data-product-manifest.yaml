@@ -3,7 +3,7 @@ jobName: User Master - Postgres Load_1
 jobType: Source Aligned Data Product
 developerId: f2228f41-8c2e-439a-807a-cdbaab7ef5b2
 domain: business
-alias: loading_into_postgres
+alias: loading_into_postgres_1
 discoveryPort:
   name: User Master - Postgres Load_1
 inputPorts:
