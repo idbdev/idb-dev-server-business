@@ -7,7 +7,7 @@ alias: loading_into_postgres_1
 discoveryPort:
   name: User Master - Postgres Load_1
 inputPorts:
-  - alias: data_1_1_1
+  - alias: data_1_1
     isDynamic: true
     connection: Postgres
     tableName/query: data_1
