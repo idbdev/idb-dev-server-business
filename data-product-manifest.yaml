@@ -1,0 +1,69 @@
+jobId: "986"
+jobName: User Occupation
+jobType: Source Aligned Data Product
+developerId: e57fd089-0c45-4273-8d8d-92f488de08b7
+domain: business
+alias: load
+discoveryPort:
+  name: User Occupation
+inputPorts:
+  - alias: UserMaster_1
+    isDynamic: true
+    connection: postgres
+    tableName/query: usermaster
+    optional:
+      persistDataFrame: false
+      enableDataReconciliation: false
+      enforceSchema: false
+      dataSetUrn: urn:dv:dataset:3ae0bdae-addd-4a7c-b552-dfbbf884da44
+    type: readPostGreSqlDbUsingJdbc
+productState:
+  isDynamic: true
+  alias: load
+  retentionVersions: ""
+  logicalSchema:
+    properties:
+      name:
+        type: STRING
+        description: Name of the user
+        sourceColumn: Name
+        sourceTable: public.data_1
+      age:
+        type: STRING
+        description: Age of the user
+        sourceColumn: Age
+        sourceTable: public.data_1
+      city:
+        type: STRING
+        description: Location of the user
+        sourceColumn: City
+        sourceTable: public.data_1
+      occupation:
+        type: STRING
+        description: Profession of the user
+        sourceColumn: Occupation
+        sourceTable: public.data_1
+  stateStoreType: writeDataFrameToPostgresTable
+  isProfilingEnabled: false
+  updateStrategy: Overwrite
+  connection: postgres
+  tableName: public.UserOccupation
+  optional:
+    persistDataFrame: false
+    enableDataReconciliation: false
+    enforceSchema: true
+  refreshInterval: 30 13 * * *
+transformation:
+  - isDynamic: true
+    alias: Spark_SQL_1
+    description: Transform
+    sequence: 2
+    inputDataFrameList:
+      - inputDataFrame: UserMaster_1
+        tempViewName: temp
+    query: select * from temp
+    optional:
+      persistDataFrame: false
+    type: operationThroughSqlQuery
+controlPort:
+  dataQualityRules: {}
