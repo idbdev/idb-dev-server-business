@@ -1,69 +1,87 @@
-jobId: "986"
-jobName: User Occupation
+jobId: "983"
+jobName: shop 360- delimited to iceberg
 jobType: Source Aligned Data Product
 developerId: e57fd089-0c45-4273-8d8d-92f488de08b7
 domain: business
-alias: load
+alias: loading_data
 discoveryPort:
-  name: User Occupation
+  name: shop 360- delimited to iceberg
 inputPorts:
-  - alias: UserMaster_1
+  - alias: VSHOPFLOORORDER_1
     isDynamic: true
-    connection: postgres
-    tableName/query: usermaster
+    path: s3a://byte-etl-externaldemo/PoC/Lupin/PASX/VSHOPFLOORORDER/
     optional:
       persistDataFrame: false
+      advanceOptions:
+        delimiter: ","
       enableDataReconciliation: false
       enforceSchema: false
-      dataSetUrn: urn:dv:dataset:3ae0bdae-addd-4a7c-b552-dfbbf884da44
-    type: readPostGreSqlDbUsingJdbc
+      connection: S3 conn
+      dataSetUrn: urn:dv:dataset:9649caa9-bd2d-4ead-9b5d-afffaaea517b
+    type: inputDelimited
 productState:
   isDynamic: true
-  alias: load
+  alias: loading_data
   retentionVersions: ""
   logicalSchema:
     properties:
-      name:
+      Name:
         type: STRING
         description: Name of the user
         sourceColumn: Name
         sourceTable: public.data_1
-      age:
+        isPII: true
+      Age:
         type: STRING
         description: Age of the user
         sourceColumn: Age
         sourceTable: public.data_1
-      city:
+        isPII: true
+      City:
         type: STRING
         description: Location of the user
         sourceColumn: City
         sourceTable: public.data_1
-      occupation:
+        isPII: false
+      Occupation:
         type: STRING
         description: Profession of the user
         sourceColumn: Occupation
         sourceTable: public.data_1
-  stateStoreType: writeDataFrameToPostgresTable
+        isPII: false
+  stateStoreType: loadDataIceberg
   isProfilingEnabled: false
   updateStrategy: Overwrite
-  connection: postgres
-  tableName: public.UserOccupation
+  tableName: iceberg_meta.delimitedToIcebergAzureTesting
+  warehousePath: s3a://dataverse/testbed_load/
+  catalogName: postgres_catalog
   optional:
     persistDataFrame: false
     enableDataReconciliation: false
-    enforceSchema: true
-  refreshInterval: 30 13 * * *
+    enforceSchema: false
+    enforceSchemaMethod: Warning
+    catalogType: postgres
+    connection: S3 conn
+    loggingOptions:
+      printSchema: true
+      count: true
+      showData: true
+  refreshInterval: 30 5 * * *
 transformation:
   - isDynamic: true
     alias: Spark_SQL_1
-    description: Transform
+    description: transforming for iceberg
     sequence: 2
     inputDataFrameList:
-      - inputDataFrame: UserMaster_1
+      - inputDataFrame: VSHOPFLOORORDER_1
         tempViewName: temp
     query: select * from temp
     optional:
       persistDataFrame: false
+      loggingOptions:
+        printSchema: true
+        count: true
+        showData: true
     type: operationThroughSqlQuery
 controlPort:
   dataQualityRules: {}
