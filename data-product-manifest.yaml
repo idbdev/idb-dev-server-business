@@ -56,18 +56,19 @@ productState:
         sourceColumn: Occupation
         sourceTable: public.data_1
         isPII: false
-  stateStoreType: loadDataIceberg
-  isProfilingEnabled: false
+  stateStoreType: writeDataFrameToPostgresTable
+  isProfilingEnabled: true
   updateStrategy: Overwrite
-  tableName: iceberg_meta.kafkaStream
-  warehousePath: s3a://dataverse/testbed_load/
-  catalogName: postgres_catalog
+  connection: postgres conn
+  tableName: iceberg_meta.KsfkaStreamPostgres
   optional:
     persistDataFrame: false
     enableDataReconciliation: false
     enforceSchema: false
-    enforceSchemaMethod: Warning
-    catalogType: postgres
+    loggingOptions:
+      printSchema: true
+      count: true
+      showData: true
   refreshInterval: None
 transformation:
   - isDynamic: true
@@ -86,4 +87,14 @@ transformation:
         showData: true
     type: operationThroughSqlQuery
 controlPort:
-  dataQualityRules: {}
+  dataQualityRules:
+    NullValueCheck:
+      productState:
+        checks:
+          - column: name
+        referenceAlias: loading
+    UniquenessCheck:
+      productState:
+        checks:
+          - column: name
+        referenceAlias: loading
