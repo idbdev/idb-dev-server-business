@@ -32,43 +32,30 @@ productState:
   retentionVersions: ""
   logicalSchema:
     properties:
-      Name:
+      name:
         type: STRING
         description: Name of the user
         sourceColumn: Name
         sourceTable: public.data_1
         isPII: true
-      Age:
+      age:
         type: STRING
         description: Age of the user
         sourceColumn: Age
         sourceTable: public.data_1
         isPII: true
-      City:
-        type: STRING
-        description: Location of the user
-        sourceColumn: City
-        sourceTable: public.data_1
-        isPII: false
-      Occupation:
-        type: STRING
-        description: Profession of the user
-        sourceColumn: Occupation
-        sourceTable: public.data_1
-        isPII: false
-  stateStoreType: writeDataFrameToPostgresTable
+  stateStoreType: loadDataIceberg
   isProfilingEnabled: true
   updateStrategy: Overwrite
-  connection: postgres conn
-  tableName: iceberg_meta.KsfkaStreamPostgres
+  tableName: iceberg_meta.sadpAzureKafkaStream
+  warehousePath: s3a://dataverse/dev_server/iceberg_warehouse_testing/
+  catalogName: postgres_catalog
   optional:
     persistDataFrame: false
     enableDataReconciliation: false
     enforceSchema: false
-    loggingOptions:
-      printSchema: true
-      count: true
-      showData: true
+    enforceSchemaMethod: Warning
+    catalogType: postgres
   refreshInterval: None
 transformation:
   - isDynamic: true
