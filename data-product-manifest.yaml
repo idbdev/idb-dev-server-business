@@ -33,7 +33,26 @@ productState:
   isDynamic: true
   alias: loading
   retentionVersions: ""
-  logicalSchema: ""
+  logicalSchema:
+    properties:
+      Name:
+        type: STRING
+        description: Name of the user
+        sourceColumn: Name
+        sourceTable: public.data_1
+        isPII: true
+      Age:
+        type: STRING
+        description: Age of the user
+        sourceColumn: Age
+        sourceTable: public.data_1
+        isPII: true
+      City:
+        type: STRING
+        description: Location of the user
+        sourceColumn: City
+        sourceTable: public.data_1
+        isPII: false
   stateStoreType: loadDataIceberg
   isProfilingEnabled: true
   updateStrategy: Overwrite
