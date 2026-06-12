@@ -4,7 +4,7 @@ jobType: Source Aligned Data Product
 jobSubType: streaming
 developerId: e57fd089-0c45-4273-8d8d-92f488de08b7
 domain: business
-alias: loading
+alias: loading_in_iceberg
 discoveryPort:
   name: real time DP
 inputPorts: []
@@ -31,7 +31,7 @@ streamingInputPorts:
     sequence: 1
 productState:
   isDynamic: true
-  alias: loading
+  alias: loading_in_iceberg
   retentionVersions: ""
   logicalSchema:
     properties:
@@ -89,9 +89,9 @@ controlPort:
       productState:
         checks:
           - column: name
-        referenceAlias: loading
+        referenceAlias: loading_in_iceberg
     UniquenessCheck:
       productState:
         checks:
           - column: name
-        referenceAlias: loading
+        referenceAlias: loading_in_iceberg
