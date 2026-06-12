@@ -56,6 +56,7 @@ productState:
     enforceSchema: false
     enforceSchemaMethod: Warning
     catalogType: postgres
+    connection: S3 conn
   refreshInterval: None
 transformation:
   - isDynamic: true
