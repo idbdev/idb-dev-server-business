@@ -1,12 +1,12 @@
 jobId: "991"
-jobName: kafka v2
+jobName: kafka v2.1
 jobType: Source Aligned Data Product
 jobSubType: streaming
 developerId: e57fd089-0c45-4273-8d8d-92f488de08b7
 domain: business
 alias: loading_in_iceberg_for_kafka
 discoveryPort:
-  name: kafka v2
+  name: kafka v2.1
 inputPorts: []
 streamingInputPorts:
   - alias: kafka_ds_1
