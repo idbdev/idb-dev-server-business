@@ -13,7 +13,7 @@ streamingInputPorts:
     isDynamic: true
     connection: kafka conn
     topics:
-      - test-topic
+      - kafka-test
     schema:
       - columnName: name
         dataType: String
@@ -45,7 +45,7 @@ productState:
   stateStoreType: loadDataIceberg
   isProfilingEnabled: true
   updateStrategy: Overwrite
-  tableName: iceberg_meta.kafkatestv2
+  tableName: iceberg_meta.kafkatestv3
   warehousePath: s3a://dataverse/dev_server/iceberg_warehouse_testing/
   catalogName: postgres_catalog
   optional:
