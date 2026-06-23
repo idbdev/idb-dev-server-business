@@ -1,25 +1,43 @@
-jobId: "986"
-jobName: User Occupation
+jobId: "997"
+jobName: final Real time
 jobType: Source Aligned Data Product
+jobSubType: streaming
 developerId: e57fd089-0c45-4273-8d8d-92f488de08b7
 domain: business
-alias: load
+alias: load_real_time
 discoveryPort:
-  name: User Occupation
-inputPorts:
-  - alias: UserMaster_1
+  name: final Real time
+inputPorts: []
+streamingInputPorts:
+  - alias: kafka_ds_1
     isDynamic: true
-    connection: postgres
-    tableName/query: usermaster
+    connection: kafka conn
+    topics:
+      - test-topic
+    schema:
+      - columnName: name
+        dataType: String
+        nullable: true
+      - columnName: age
+        dataType: String
+        nullable: true
+      - columnName: city
+        dataType: String
+        nullable: true
+      - columnName: occupation
+        dataType: String
+        nullable: true
+      - columnName: ts
+        dataType: String
+        nullable: true
     optional:
-      persistDataFrame: false
-      enableDataReconciliation: false
-      enforceSchema: false
-      dataSetUrn: urn:dv:dataset:3ae0bdae-addd-4a7c-b552-dfbbf884da44
-    type: readPostGreSqlDbUsingJdbc
+      advanceOptions:
+        failOnDataLoss: true
+    type: kafkaStream
+    sequence: 1
 productState:
   isDynamic: true
-  alias: load
+  alias: load_real_time
   retentionVersions: ""
   logicalSchema:
     properties:
@@ -43,27 +61,46 @@ productState:
         description: Profession of the user
         sourceColumn: Occupation
         sourceTable: public.data_1
-  stateStoreType: writeDataFrameToPostgresTable
-  isProfilingEnabled: false
-  updateStrategy: Overwrite
-  connection: postgres
-  tableName: public.UserOccupation
+      timestamp:
+        type: STRING
+        description: ts of the user
+        sourceColumn: ts
+        sourceTable: public.data_1
+  stateStoreType: loadDataIceberg
+  isProfilingEnabled: true
+  updateStrategy: Append
+  tableName: iceberg_meta.kfkav2
+  warehousePath: s3a://dataverse/dev_server/iceberg_warehouse_testing/
+  catalogName: postgres_catalog
   optional:
     persistDataFrame: false
     enableDataReconciliation: false
-    enforceSchema: true
-  refreshInterval: 30 13 * * *
+    enforceSchema: false
+    enforceSchemaMethod: Warning
+    catalogType: postgres
+    connection: S3 conn
+  refreshInterval: None
 transformation:
   - isDynamic: true
     alias: Spark_SQL_1
-    description: Transform
+    description: load
     sequence: 2
     inputDataFrameList:
-      - inputDataFrame: UserMaster_1
-        tempViewName: temp
-    query: select * from temp
+      - inputDataFrame: kafka_ds_1
+        tempViewName: tmp
+    query: select * from tmp
     optional:
       persistDataFrame: false
     type: operationThroughSqlQuery
 controlPort:
-  dataQualityRules: {}
+  dataQualityRules:
+    NullValueCheck:
+      productState:
+        checks:
+          - column: name
+        referenceAlias: load_real_time
+    UniquenessCheck:
+      productState:
+        checks:
+          - column: name
+        referenceAlias: load_real_time
