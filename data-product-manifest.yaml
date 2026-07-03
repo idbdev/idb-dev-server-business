@@ -1,25 +1,34 @@
-jobId: "986"
-jobName: User Occupation
+jobId: "1169"
+jobName: kafkaRT
 jobType: Source Aligned Data Product
-developerId: e57fd089-0c45-4273-8d8d-92f488de08b7
+jobSubType: streaming
+developerId: e3177aef-f9f9-4f45-b0a7-a46ea5466170
 domain: business
-alias: load
+alias: loading_rt
 discoveryPort:
-  name: User Occupation
-inputPorts:
-  - alias: UserMaster_1
+  name: kafkaRT
+inputPorts: []
+streamingInputPorts:
+  - alias: kafka_ds_1
     isDynamic: true
-    connection: postgres
-    tableName/query: usermaster
+    connection: kafka connection
+    topics:
+      - test-topic
+    schema:
+      - columnName: name
+        dataType: String
+        nullable: true
+      - columnName: ts
+        dataType: String
+        nullable: true
     optional:
-      persistDataFrame: false
-      enableDataReconciliation: false
-      enforceSchema: false
-      dataSetUrn: urn:dv:dataset:3ae0bdae-addd-4a7c-b552-dfbbf884da44
-    type: readPostGreSqlDbUsingJdbc
+      advanceOptions:
+        failOnDataLoss: true
+    type: kafkaStream
+    sequence: 1
 productState:
   isDynamic: true
-  alias: load
+  alias: loading_rt
   retentionVersions: ""
   logicalSchema:
     properties:
@@ -28,42 +37,46 @@ productState:
         description: Name of the user
         sourceColumn: Name
         sourceTable: public.data_1
-      age:
+      ts:
         type: STRING
-        description: Age of the user
-        sourceColumn: Age
+        description: ts of the user
+        sourceColumn: ts
         sourceTable: public.data_1
-      city:
-        type: STRING
-        description: Location of the user
-        sourceColumn: City
-        sourceTable: public.data_1
-      occupation:
-        type: STRING
-        description: Profession of the user
-        sourceColumn: Occupation
-        sourceTable: public.data_1
-  stateStoreType: writeDataFrameToPostgresTable
-  isProfilingEnabled: false
-  updateStrategy: Overwrite
-  connection: postgres
-  tableName: public.UserOccupation
+  stateStoreType: loadDataIceberg
+  isProfilingEnabled: true
+  updateStrategy: Append
+  tableName: iceberg_meta.kafka307
+  warehousePath: s3a://dataverse/testbedLoad
+  catalogName: postgres_catalog
   optional:
     persistDataFrame: false
     enableDataReconciliation: false
-    enforceSchema: true
-  refreshInterval: 30 13 * * *
+    enforceSchema: false
+    enforceSchemaMethod: Warning
+    catalogType: postgres
+    connection: S3 Connection - FMCG
+  refreshInterval: None
 transformation:
   - isDynamic: true
     alias: Spark_SQL_1
-    description: Transform
+    description: transform rt
     sequence: 2
     inputDataFrameList:
-      - inputDataFrame: UserMaster_1
-        tempViewName: temp
-    query: select * from temp
+      - inputDataFrame: kafka_ds_1
+        tempViewName: tmp
+    query: select * from tmp
     optional:
       persistDataFrame: false
     type: operationThroughSqlQuery
 controlPort:
-  dataQualityRules: {}
+  dataQualityRules:
+    NullValueCheck:
+      productState:
+        checks:
+          - column: name
+        referenceAlias: loading_rt
+    UniquenessCheck:
+      productState:
+        checks:
+          - column: name
+        referenceAlias: loading_rt
