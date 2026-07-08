@@ -1,258 +1,69 @@
-jobId: "1089"
-jobName: R&D Pipeline And Biologics Research
-jobType: Source Aligned Data Product
-developerId: 42825798-b98f-41c3-954a-c0722b747faf
-domain: research
-alias: loading_RND_Pipeline_And_Biologics_Research_data_in_iceberg
+jobId: "1008"
+jobName: Port Management - ADP
+jobType: Aggregated Data Product
+developerId: e3177aef-f9f9-4f45-b0a7-a46ea5466170
+domain: business
+alias: loading_into_iceberg
 discoveryPort:
-  name: R&D Pipeline And Biologics Research
+  name: Port Management - ADP
 inputPorts:
-  - alias: Rnd_Pipeline_1
+  - alias: Port_Management_1
     isDynamic: true
-    path: s3a://dataverse/testbed/bioc/STG_RND_PIPELINE.csv
+    dataProductUrn: urn:dv:dataproduct:d9148067-c21f-4ddb-8bc7-af9ee5efb823
+    filter: ""
+    projection: ""
     optional:
       persistDataFrame: false
-      advanceOptions:
-        delimiter: ","
-      enableDataReconciliation: false
-      enforceSchema: false
-      connection: S3 Connection - Lifesciences
-      dataSetUrn: urn:dv:dataset:8a65281e-f66d-4c77-8829-e10fb935fb95
-    type: inputDelimited
-  - alias: Translation_Research_1
-    isDynamic: true
-    path: s3a://dataverse/testbed/bioc/STG_TRANSLATIONAL_RESEARCH.csv
-    optional:
-      persistDataFrame: false
-      advanceOptions:
-        delimiter: ","
-      enableDataReconciliation: false
-      enforceSchema: false
-      connection: S3 Connection - Lifesciences
-      dataSetUrn: urn:dv:dataset:3f26755d-e4a7-4b3e-8e6d-446ffca73b6b
-    type: inputDelimited
-  - alias: Ind_Filings_1
-    isDynamic: true
-    path: s3a://dataverse/testbed/bioc/STG_IND_FILINGS.csv
-    optional:
-      persistDataFrame: false
-      advanceOptions:
-        delimiter: ","
-      enableDataReconciliation: false
-      enforceSchema: false
-      connection: S3 Connection - Lifesciences
-      dataSetUrn: urn:dv:dataset:6c0fc3d0-5ce9-41d7-80c9-52b3a6e8129a
-    type: inputDelimited
+      loggingOptions:
+        printSchema: true
+        count: true
+        showData: true
+    type: dataproduct
 productState:
   isDynamic: true
-  alias: loading_RND_Pipeline_And_Biologics_Research_data_in_iceberg
+  alias: loading_into_iceberg
   retentionVersions: ""
   logicalSchema:
     properties:
-      PROGRAM_ID:
+      Name:
         type: STRING
-        description: Unique identifier for the R&D program
-        sourceColumn: PROGRAM_ID
-        sourceTable: RND_PIPELINE
-      PROGRAM_NAME:
-        type: STRING
-        description: Descriptive name of the R&D program
-        sourceColumn: PROGRAM_NAME
-        sourceTable: RND_PIPELINE
-      PRODUCT_NAME:
-        type: STRING
-        description: Name of the product under research and development
-        sourceColumn: PRODUCT_NAME
-        sourceTable: RND_PIPELINE
-      MOLECULE_TYPE:
-        type: STRING
-        description: Type of molecule (e.g., Recombinant Protein, mAb)
-        sourceColumn: MOLECULE_TYPE
-        sourceTable: RND_PIPELINE
-      THERAPEUTIC_AREA:
-        type: STRING
-        description: Therapeutic area targeted by the program (e.g., Infectious Disease)
-        sourceColumn: THERAPEUTIC_AREA
-        sourceTable: RND_PIPELINE
-      INDICATION:
-        type: STRING
-        description: Specific disease indication (e.g., COVID-19 Variants)
-        sourceColumn: INDICATION
-        sourceTable: RND_PIPELINE
-      PHASE:
-        type: STRING
-        description: Current development phase (e.g., Phase I, Phase II, Phase III)
-        sourceColumn: PHASE
-        sourceTable: RND_PIPELINE
-      PROGRAM_STATUS:
-        type: STRING
-        description: Current status of the R&D program (Active, Completed, On Hold)
-        sourceColumn: STATUS
-        sourceTable: RND_PIPELINE
-      START_DATE:
-        type: STRING
-        description: Date the R&D program commenced
-        sourceColumn: START_DATE
-        sourceTable: RND_PIPELINE
-      EXPECTED_COMPLETION:
-        type: STRING
-        description: Projected completion date of the program
-        sourceColumn: EXPECTED_COMPLETION
-        sourceTable: RND_PIPELINE
-      BUDGET_USD:
-        type: STRING
-        description: Total allocated budget for the program in USD
-        sourceColumn: BUDGET_USD
-        sourceTable: RND_PIPELINE
-      SPEND_TO_DATE_USD:
-        type: STRING
-        description: Cumulative spend against the program budget in USD
-        sourceColumn: SPEND_TO_DATE_USD
-        sourceTable: RND_PIPELINE
-      BUDGET_UTILIZATION_PCT:
-        type: STRING
-        description: "Derived budget utilization: ROUND(SPEND_TO_DATE_USD * 100.0 /
-          NULLIF(BUDGET_USD, 0), 2)"
-        sourceColumn: Calculated Column
-        sourceTable: Calculated Column
-      PRINCIPAL_INVESTIGATOR:
-        type: STRING
-        description: Lead investigator responsible for the R&D program
-        sourceColumn: PRINCIPAL_INVESTIGATOR
-        sourceTable: RND_PIPELINE
-      PARTNERSHIP:
-        type: STRING
-        description: External partner or CRO collaborating on the program
-        sourceColumn: PARTNERSHIP
-        sourceTable: RND_PIPELINE
-      FILING_ID:
-        type: STRING
-        description: Unique identifier for the IND/CTA filing
-        sourceColumn: FILING_ID
-        sourceTable: IND_FILINGS
-      FILING_TYPE:
-        type: STRING
-        description: Type of regulatory filing (e.g., Original IND, IND Amendment, CTA)
-        sourceColumn: FILING_TYPE
-        sourceTable: IND_FILINGS
-      IND_STATUS:
-        type: STRING
-        description: Current status of the IND filing (Active, Withdrawn, Pending)
-        sourceColumn: STATUS
-        sourceTable: IND_FILINGS
-      CLINICAL_HOLD:
-        type: STRING
-        description: Whether the filing is under clinical hold (true/false)
-        sourceColumn: CLINICAL_HOLD
-        sourceTable: IND_FILINGS
-      RESEARCH_ID:
-        type: STRING
-        description: Unique identifier for the translational research experiment
-        sourceColumn: RESEARCH_ID
-        sourceTable: TRANSLATIONAL_RESEARCH
-      ASSAY_TYPE:
-        type: STRING
-        description: Type of laboratory assay (e.g., Binding Affinity, Neutralization)
-        sourceColumn: ASSAY_TYPE
-        sourceTable: TRANSLATIONAL_RESEARCH
-      TARGET_NAME:
-        type: STRING
-        description: Biological target being studied (e.g., Spike Protein RBD)
-        sourceColumn: TARGET_NAME
-        sourceTable: TRANSLATIONAL_RESEARCH
-      BIOMARKER:
-        type: STRING
-        description: Biomarker measured in the experiment (e.g., Anti-RBD IgG)
-        sourceColumn: BIOMARKER
-        sourceTable: TRANSLATIONAL_RESEARCH
-      RESULT_VALUE:
-        type: STRING
-        description: Numeric result value from the experiment
-        sourceColumn: RESULT_VALUE
-        sourceTable: TRANSLATIONAL_RESEARCH
-      RESULT_UNIT:
-        type: STRING
-        description: Unit of measurement for the result (e.g., nM, titer)
-        sourceColumn: RESULT_UNIT
-        sourceTable: TRANSLATIONAL_RESEARCH
-      RESEARCH_STATUS:
-        type: STRING
-        description: Current status of the research experiment (Completed, In Progress)
-        sourceColumn: STATUS
-        sourceTable: TRANSLATIONAL_RESEARCH
+        description: Name of the user
+        sourceColumn: Name
+        sourceTable: public.data_1
+        isPII: true
   stateStoreType: loadDataIceberg
-  isProfilingEnabled: true
+  isProfilingEnabled: false
   updateStrategy: Overwrite
-  tableName: iceberg_meta.RND_Pipeline_And_Biologics_Research_1
+  tableName: iceberg_meta.adp_port_mgmt_test
   warehousePath: s3a://dataverse/testbed_load/
   catalogName: postgres_catalog
   optional:
     persistDataFrame: false
     enableDataReconciliation: false
-    enforceSchema: true
+    enforceSchema: false
     enforceSchemaMethod: Warning
     catalogType: postgres
-    connection: S3 Connection - Lifesciences
+    connection: S3 Connection
     loggingOptions:
       printSchema: true
-  refreshInterval: 30 5 * * *
+      count: true
+      showData: true
+  refreshInterval: None
 transformation:
   - isDynamic: true
-    alias: Transform
-    description: Transforming RND Pipeline And Biologics Research
-    sequence: 4
+    alias: Spark_SQL_1
+    description: select al columns
+    sequence: 2
     inputDataFrameList:
-      - inputDataFrame: Rnd_Pipeline_1
-        tempViewName: RND_PIPELINE
-      - inputDataFrame: Translation_Research_1
-        tempViewName: TRANSLATIONAL_RESEARCH
-      - inputDataFrame: Ind_Filings_1
-        tempViewName: IND_FILINGS
-    query: SELECT rp.PROGRAM_ID, rp.PROGRAM_NAME, rp.PRODUCT_NAME, rp.MOLECULE_TYPE,
-      rp.THERAPEUTIC_AREA, rp.INDICATION, rp.PHASE, rp.STATUS AS PROGRAM_STATUS,
-      rp.START_DATE, rp.EXPECTED_COMPLETION, rp.BUDGET_USD,
-      rp.SPEND_TO_DATE_USD, ROUND( CASE WHEN rp.BUDGET_USD = 0 THEN NULL ELSE
-      (rp.SPEND_TO_DATE_USD * 100.0) / rp.BUDGET_USD END, 2 ) AS
-      BUDGET_UTILIZATION_PCT, rp.PRINCIPAL_INVESTIGATOR, rp.PARTNERSHIP,
-      ind.FILING_ID, ind.FILING_TYPE, ind.STATUS AS IND_STATUS,
-      ind.CLINICAL_HOLD, tr.RESEARCH_ID, tr.ASSAY_TYPE, tr.TARGET_NAME,
-      tr.BIOMARKER, tr.RESULT_VALUE, tr.RESULT_UNIT, tr.STATUS AS
-      RESEARCH_STATUS FROM RND_PIPELINE rp LEFT JOIN IND_FILINGS ind ON
-      rp.PROGRAM_ID = ind.PROGRAM_ID LEFT JOIN TRANSLATIONAL_RESEARCH tr ON
-      rp.PROGRAM_ID = tr.PROGRAM_ID
+      - inputDataFrame: Port_Management_1
+        tempViewName: PM
+    query: select * from PM
     optional:
       persistDataFrame: false
       loggingOptions:
         printSchema: true
+        count: true
+        showData: true
     type: operationThroughSqlQuery
 controlPort:
-  dataQualityRules:
-    NullValueCheck:
-      productState:
-        checks:
-          - column: BUDGET_USD
-          - column: PROGRAM_STATUS
-          - column: PRODUCT_NAME
-        referenceAlias: loading_RND_Pipeline_And_Biologics_Research_data_in_iceberg
-    NullCombinationCheck:
-      productState:
-        checks:
-          - columns:
-              - BUDGET_UTILIZATION_PCT
-            expression: <=
-            number: 25
-        referenceAlias: loading_RND_Pipeline_And_Biologics_Research_data_in_iceberg
-    UniquenessCheck:
-      productState:
-        checks:
-          - column: PROGRAM_ID
-        referenceAlias: loading_RND_Pipeline_And_Biologics_Research_data_in_iceberg
-    UnacceptableTextValueCheck:
-      productState:
-        checks:
-          - column: PROGRAM_ID
-            valueList:
-              - xyz
-            expression: ">="
-            number: 1
-        referenceAlias: loading_RND_Pipeline_And_Biologics_Research_data_in_iceberg
+  dataQualityRules: {}
