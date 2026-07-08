@@ -1,11 +1,11 @@
 jobId: "3701"
-jobName: snowflake dp
+jobName: snowflake dp2
 jobType: Source Aligned Data Product
 developerId: 7f096247-19a8-4865-bc66-600180317b87
 domain: business
 alias: loading_from_sf
 discoveryPort:
-  name: snowflake dp
+  name: snowflake dp2
 inputPorts:
   - alias: snoflake_ds_1
     isDynamic: true
@@ -18,39 +18,42 @@ inputPorts:
       dataSetUrn: urn:dv:dataset:5966da49-187c-413e-b53a-3c7501431f70
     type: readSnowflakeTable
 productState:
-  isDynamic: true
-  alias: loading_from_sf
+isDynamic: true
+  alias: loading_data2
   retentionVersions: ""
-  logicalSchema:
-    properties:
-      Name:
-        type: STRING
-        description: Name of the user
-        sourceColumn: Name
-        sourceTable: public.data_1
-      Age:
-        type: STRING
-        description: Age of the user
-        sourceColumn: Age
-        sourceTable: public.data_1
-  stateStoreType: loadDataIceberg
+  logicalSchema: ""
+  stateStoreType: writeDataFrameToSnowflakeTable
   isProfilingEnabled: false
-  updateStrategy: Overwrite
-  tableName: iceberg_meta.snowflakedp
-  warehousePath: s3a://dataverse/testbedLoad
-  catalogName: postgres_catalog
+  connection: Snowflake - yamini
+  tableName: employeeDV
   optional:
     persistDataFrame: false
+    truncateColumns: false
+    role: ACCOUNTADMIN
+    columnMap:
+      - inputColumn: emp_id
+        targetColumn: emp_id
+      - inputColumn: full_name
+        targetColumn: full_name
+      - inputColumn: department
+        targetColumn: department
+      - inputColumn: salary
+        targetColumn: salary
+      - inputColumn: join_date
+        targetColumn: join_date
+    addRunIdColumn: false
     enableDataReconciliation: false
     enforceSchema: false
     enforceSchemaMethod: Warning
-    catalogType: postgres
-    connection: S3 Connection
-  refreshInterval: 10 3 * * *
+    loggingOptions:
+      printSchema: true
+      count: true
+      showData: true
+  refreshInterval: None
 transformation:
   - isDynamic: true
     alias: Spark_SQL_1
-    description: transforming sf
+    description: transforming sf2
     sequence: 2
     inputDataFrameList:
       - inputDataFrame: snoflake_ds_1
