@@ -1,71 +1,52 @@
-jobId: "990"
-jobName: Consume Test
-jobType: Source Aligned Data Product
-developerId: f2228f41-8c2e-439a-807a-cdbaab7ef5b2
+jobId: "3703"
+jobName: adp-yamini
+jobType: Aggregated Data Product
+developerId: 7f096247-19a8-4865-bc66-600180317b87
 domain: business
-alias: Loading_data_into_postgres
+alias: load
 discoveryPort:
-  name: Consume Test
+  name: adp-yamini
 inputPorts:
-  - alias: data_1_1
+  - alias: Shop_360_1
     isDynamic: true
-    connection: Postgres
-    tableName/query: data_1
+    dataProductUrn: urn:dv:dataproduct:45947239-31b3-4c5f-b009-56bb31cf9aca
+    filter: ""
+    projection: ""
     optional:
       persistDataFrame: false
-      enableDataReconciliation: false
-      enforceSchema: false
-      dataSetUrn: urn:dv:dataset:d6fe89a0-adc7-4b3a-941e-940a2e0c0c19
-      loggingOptions:
-        printSchema: true
-        count: true
-        showData: true
-    type: readPostGreSqlDbUsingJdbc
+    type: dataproduct
 productState:
   isDynamic: true
-  alias: Loading_data_into_postgres
+  alias: load
   retentionVersions: ""
   logicalSchema:
     properties:
-      Name:
+      name:
         type: STRING
-        description: Name of the user
-        sourceColumn: Name
-        sourceTable: public.data_1
-      Age:
-        type: STRING
-        description: Age of the user
-        sourceColumn: Age
-        sourceTable: public.data_1
-      City:
-        type: STRING
-        description: Location of the user
-        sourceColumn: City
-        sourceTable: public.data_1
-      Occupation:
-        type: STRING
-        description: Profession of the user
-        sourceColumn: Occupation
-        sourceTable: public.data_1
-  stateStoreType: writeDataFrameToPostgresTable
+        description: ""
+  stateStoreType: loadDataIceberg
   isProfilingEnabled: false
   updateStrategy: Overwrite
-  connection: Postgres
-  tableName: public.consume_test
+  tableName: iceberg_meta.adptt
+  warehousePath: s3a://dataverse
+  catalogName: postgres_catalog
   optional:
     persistDataFrame: false
     enableDataReconciliation: false
-    enforceSchema: true
-  refreshInterval: 30 12 * * *
+    enforceSchema: false
+    enforceSchemaMethod: Warning
+    catalogType: postgres
+    connection: S3 Connection
+  refreshInterval: None
 transformation:
   - isDynamic: true
     alias: Spark_SQL_1
-    description: quering data
+    description: ld
     sequence: 2
     inputDataFrameList:
-      - inputDataFrame: data_1_1
-        tempViewName: temp
-    query: select * from temp
+      - inputDataFrame: Shop_360_1
+        tempViewName: mtp
+    query: select * from mtp
     optional:
       persistDataFrame: false
     type: operationThroughSqlQuery
