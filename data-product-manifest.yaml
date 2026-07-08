@@ -3,7 +3,7 @@ jobName: Sales Volume Achievement1
 jobType: Source Aligned Data Product
 developerId: 42825798-b98f-41c3-954a-c0722b747faf
 domain: sales
-alias: loading_WCL_Sales_To_Target_Mapping_data_in_iceberg
+alias: loading_WCL_Sales_To_Target_Mapping_data_in_iceberg1
 discoveryPort:
   name: Sales Volume Achievement1
 inputPorts:
