@@ -1,65 +1,607 @@
-jobId: "986"
-jobName: User Occupation
+jobId: "3722"
+jobName: Sales Performance
 jobType: Source Aligned Data Product
-developerId: e57fd089-0c45-4273-8d8d-92f488de08b7
+developerId: 3af0876b-d886-4635-af06-b2ecb43da78e
 domain: business
-alias: load
+alias: Load
 discoveryPort:
-  name: User Occupation
+  name: Sales Performance
 inputPorts:
-  - alias: UserMaster_1
+  - alias: Actual_Sales_1
     isDynamic: true
-    connection: postgres
-    tableName/query: usermaster
+    path: s3a://dataverse/testbed/WCL/Actual_Sales.csv
     optional:
       persistDataFrame: false
+      advanceOptions:
+        delimiter: ","
       enableDataReconciliation: false
       enforceSchema: false
-      dataSetUrn: urn:dv:dataset:3ae0bdae-addd-4a7c-b552-dfbbf884da44
-    type: readPostGreSqlDbUsingJdbc
+      connection: S3 Connection
+      dataSetUrn: urn:dv:dataset:edee0668-ed27-43d0-b275-396854a1de0d
+    type: inputDelimited
 productState:
   isDynamic: true
-  alias: load
+  alias: Load
   retentionVersions: ""
   logicalSchema:
     properties:
-      name:
+      CUSTOMER_ID:
         type: STRING
-        description: Name of the user
-        sourceColumn: Name
-        sourceTable: public.data_1
-      age:
+        description: Unique identifier of the customer
+        sourceColumn: CUSTOMER_ID
+        sourceTable: ACTUAL_SALES
+      ITEM_ID:
         type: STRING
-        description: Age of the user
-        sourceColumn: Age
-        sourceTable: public.data_1
-      city:
+        description: Identifier of the product/item, e.g. cement grade such as PPC,
+          OPC43, OPC53
+        sourceColumn: ITEM_ID
+        sourceTable: ACTUAL_SALES
+      RECID:
         type: STRING
-        description: Location of the user
-        sourceColumn: City
-        sourceTable: public.data_1
-      occupation:
+        description: System-generated unique record identifier for the sales line
+        sourceColumn: RECID
+        sourceTable: ACTUAL_SALES
+      SALES_ID:
         type: STRING
-        description: Profession of the user
-        sourceColumn: Occupation
-        sourceTable: public.data_1
-  stateStoreType: writeDataFrameToPostgresTable
+        description: Sales order identifier
+        sourceColumn: SALES_ID
+        sourceTable: ACTUAL_SALES
+      INVOICE_ID:
+        type: STRING
+        description: Unique invoice identifier
+        sourceColumn: INVOICE_ID
+        sourceTable: ACTUAL_SALES
+      TRANSACTION_DATE:
+        type: STRING
+        description: invoice date for SALES records (sourced from INVOICE_DATE)
+        sourceColumn: INVOICE_DATE
+        sourceTable: ACTUAL_SALES
+      INVOICED_QTY:
+        type: STRING
+        description: Quantity invoiced
+        sourceColumn: INVOICED_QTY
+        sourceTable: ACTUAL_SALES
+      UOM:
+        type: STRING
+        description: Unit of measure for the invoiced quantity, e.g. MT
+        sourceColumn: UOM
+        sourceTable: ACTUAL_SALES
+      DELIVERY_MODE:
+        type: STRING
+        description: Mode of delivery, e.g. ROAD or RAIL
+        sourceColumn: DELIVERY_MODE
+        sourceTable: ACTUAL_SALES
+      INVENT_LOCATION_ID:
+        type: STRING
+        description: Inventory/warehouse location identifier
+        sourceColumn: INVENT_LOCATION_ID
+        sourceTable: ACTUAL_SALES
+      BILLING_PRICE:
+        type: STRING
+        description: Billing price per unit
+        sourceColumn: BILLING_PRICE
+        sourceTable: ACTUAL_SALES
+      DUE_DATE:
+        type: STRING
+        description: Payment due date of the invoice
+        sourceColumn: DUE_DATE
+        sourceTable: ACTUAL_SALES
+      INVOICE_AMOUNT:
+        type: STRING
+        description: Total invoice amount
+        sourceColumn: INVOICE_AMOUNT
+        sourceTable: ACTUAL_SALES
+      INVOICE_VOUCHER:
+        type: STRING
+        description: Voucher number associated with the invoice
+        sourceColumn: INVOICE_VOUCHER
+        sourceTable: ACTUAL_SALES
+      SALES_UNIT:
+        type: STRING
+        description: Sales unit of measure, e.g. Bag
+        sourceColumn: SALES_UNIT
+        sourceTable: ACTUAL_SALES
+      SITE_ID:
+        type: STRING
+        description: Site/plant identifier
+        sourceColumn: SITE_ID
+        sourceTable: ACTUAL_SALES
+      DATA_AREA_ID:
+        type: STRING
+        description: Legal entity / company code (D365 data area)
+        sourceColumn: DATA_AREA_ID
+        sourceTable: ACTUAL_SALES
+      DELIVERY_TERM:
+        type: STRING
+        description: Delivery terms, e.g. FOB or CIF
+        sourceColumn: DELIVERY_TERM
+        sourceTable: ACTUAL_SALES
+      INVOICE_STATUS:
+        type: STRING
+        description: Status of the invoice, e.g. Posted
+        sourceColumn: INVOICE_STATUS
+        sourceTable: ACTUAL_SALES
+      SALES_PRICE:
+        type: STRING
+        description: Sales price per unit
+        sourceColumn: SALES_PRICE
+        sourceTable: ACTUAL_SALES
+      DISC_AMT:
+        type: STRING
+        description: Discount amount applied
+        sourceColumn: DISC_AMT
+        sourceTable: ACTUAL_SALES
+      MRP:
+        type: STRING
+        description: Maximum retail price
+        sourceColumn: MRP
+        sourceTable: ACTUAL_SALES
+      WMS_LOCATION_ID:
+        type: STRING
+        description: Warehouse management system location identifier
+        sourceColumn: WMS_LOCATION_ID
+        sourceTable: ACTUAL_SALES
+      ADDRESS_REC_ID:
+        type: STRING
+        description: Reference identifier of the billing/delivery address record
+        sourceColumn: ADDRESS_REC_ID
+        sourceTable: ACTUAL_SALES
+      SALES_GROUP:
+        type: STRING
+        description: Sales group classification
+        sourceColumn: SALES_GROUP
+        sourceTable: ACTUAL_SALES
+      ENTRY_DATE:
+        type: STRING
+        description: Date/time the record was entered into the system
+        sourceColumn: ENTRY_DATE
+        sourceTable: ACTUAL_SALES
+      PACKING_UNIT:
+        type: STRING
+        description: Packing unit, e.g. Bag
+        sourceColumn: PACKING_UNIT
+        sourceTable: ACTUAL_SALES
+      SALES_TYPE:
+        type: STRING
+        description: Type of sale, e.g. Wholesale
+        sourceColumn: SALES_TYPE
+        sourceTable: ACTUAL_SALES
+      CUST_INVOICE_TRANS_REC_ID:
+        type: STRING
+        description: Record identifier of the customer invoice transaction
+        sourceColumn: CUST_INVOICE_TRANS_REC_ID
+        sourceTable: ACTUAL_SALES
+      CUST_INVOICE_TRANS_TABLE_ID:
+        type: STRING
+        description: Table identifier of the customer invoice transaction
+        sourceColumn: CUST_INVOICE_TRANS_TABLE_ID
+        sourceTable: ACTUAL_SALES
+      SALES_CHANNEL:
+        type: STRING
+        description: Sales channel
+        sourceColumn: SALES_CHANNEL
+        sourceTable: ACTUAL_SALES
+      SHIPMENT_VOUCHER_TYPE:
+        type: STRING
+        description: Type of shipment voucher
+        sourceColumn: SHIPMENT_VOUCHER_TYPE
+        sourceTable: ACTUAL_SALES
+      PRICE_GROUP_ID:
+        type: STRING
+        description: Price group identifier
+        sourceColumn: PRICE_GROUP_ID
+        sourceTable: ACTUAL_SALES
+      EWBILL_EXPIRY_DATE:
+        type: STRING
+        description: Expiry date of the e-way bill
+        sourceColumn: EWBILL_EXPIRY_DATE
+        sourceTable: ACTUAL_SALES
+      EWBILL_GENERATED_DATE:
+        type: STRING
+        description: Date the e-way bill was generated
+        sourceColumn: EWBILL_GENERATED_DATE
+        sourceTable: ACTUAL_SALES
+      EWBILL_NO:
+        type: STRING
+        description: E-way bill number
+        sourceColumn: EWBILL_NO
+        sourceTable: ACTUAL_SALES
+      EWBILL_STATUS:
+        type: STRING
+        description: Status of the e-way bill, e.g. Generated
+        sourceColumn: EWBILL_STATUS
+        sourceTable: ACTUAL_SALES
+      ASSESEABLE_AMT:
+        type: STRING
+        description: Assessable amount used for tax computation
+        sourceColumn: ASSESEABLE_AMT
+        sourceTable: ACTUAL_SALES
+      MBP:
+        type: STRING
+        description: Base/maximum billing price reference value
+        sourceColumn: MBP
+        sourceTable: ACTUAL_SALES
+      GROSS_AMT:
+        type: STRING
+        description: Gross amount of the invoice
+        sourceColumn: GROSS_AMT
+        sourceTable: ACTUAL_SALES
+      FREIGHT_PASS_STATUS:
+        type: STRING
+        description: Status of freight passing
+        sourceColumn: FREIGHT_PASS_STATUS
+        sourceTable: ACTUAL_SALES
+      FREIGHT_LIABILITY_STATUS:
+        type: STRING
+        description: Status of freight liability
+        sourceColumn: FREIGHT_LIABILITY_STATUS
+        sourceTable: ACTUAL_SALES
+      FREIGHT_LIABILITY_JOURNAL:
+        type: STRING
+        description: Journal reference for freight liability
+        sourceColumn: FREIGHT_LIABILITY_JOURNAL
+        sourceTable: ACTUAL_SALES
+      FREIGHT_LIABILITY_VOUCHER:
+        type: STRING
+        description: Voucher reference for freight liability
+        sourceColumn: FREIGHT_LIABILITY_VOUCHER
+        sourceTable: ACTUAL_SALES
+      FREIGHT_PASSING_JOURNAL:
+        type: STRING
+        description: Journal reference for freight passing
+        sourceColumn: FREIGHT_PASSING_JOURNAL
+        sourceTable: ACTUAL_SALES
+      FREIGHT_PASSING_VOUCHER:
+        type: STRING
+        description: Voucher reference for freight passing
+        sourceColumn: FREIGHT_PASSING_VOUCHER
+        sourceTable: ACTUAL_SALES
+      LINE_DISC_REMARK:
+        type: STRING
+        description: Remark on line-level discount
+        sourceColumn: LINE_DISC_REMARK
+        sourceTable: ACTUAL_SALES
+      TRAILER_DISCOUNT:
+        type: STRING
+        description: Trailer/trailing discount amount
+        sourceColumn: TRAILER_DISCOUNT
+        sourceTable: ACTUAL_SALES
+      FREIGHT_LIABILITY_DATE:
+        type: STRING
+        description: Date of freight liability
+        sourceColumn: FREIGHT_LIABILITY_DATE
+        sourceTable: ACTUAL_SALES
+      FREIGHT_LIABILITY_AMT:
+        type: STRING
+        description: Freight liability amount
+        sourceColumn: FREIGHT_LIABILITY_AMT
+        sourceTable: ACTUAL_SALES
+      FREIGHT_PASSING_DATE:
+        type: STRING
+        description: Date of freight passing
+        sourceColumn: FREIGHT_PASSING_DATE
+        sourceTable: ACTUAL_SALES
+      FREIGHT_PASSING_AMT:
+        type: STRING
+        description: Freight passing amount
+        sourceColumn: FREIGHT_PASSING_AMT
+        sourceTable: ACTUAL_SALES
+      CANCELLED_SALES_ID:
+        type: STRING
+        description: Sales identifier of a cancelled sale, if applicable
+        sourceColumn: CANCELLED_SALES_ID
+        sourceTable: ACTUAL_SALES
+      CANCELLED_INVOICE_VOUCHER:
+        type: STRING
+        description: Voucher of a cancelled invoice, if applicable
+        sourceColumn: CANCELLED_INVOICE_VOUCHER
+        sourceTable: ACTUAL_SALES
+      TO_DP_CODE:
+        type: STRING
+        description: Transport order / dispatch point code
+        sourceColumn: TO_DP_CODE
+        sourceTable: ACTUAL_SALES
+      VALIDITY_DATE:
+        type: STRING
+        description: Validity date of the document
+        sourceColumn: VALIDITY_DATE
+        sourceTable: ACTUAL_SALES
+      PAYABLE_STATE:
+        type: STRING
+        description: State indicator for payable amounts
+        sourceColumn: PAYABLE_STATE
+        sourceTable: ACTUAL_SALES
+      RECOVERABLE_STATE:
+        type: STRING
+        description: State indicator for recoverable amounts
+        sourceColumn: RECOVERABLE_STATE
+        sourceTable: ACTUAL_SALES
+      FLAG_VOUCHER_CANCELLED:
+        type: STRING
+        description: Flag indicating whether the voucher was cancelled
+        sourceColumn: FLAG_VOUCHER_CANCELLED
+        sourceTable: ACTUAL_SALES
+      IS_CANCELLED:
+        type: STRING
+        description: Flag indicating whether the record was cancelled
+        sourceColumn: IS_CANCELLED
+        sourceTable: ACTUAL_SALES
+      INVOICE_DATE_TIME:
+        type: STRING
+        description: Date and time of the invoice
+        sourceColumn: INVOICE_DATE_TIME
+        sourceTable: ACTUAL_SALES
+      SALES_ROAD_QTY:
+        type: STRING
+        description: Quantity dispatched by road
+        sourceColumn: SALES_ROAD_QTY
+        sourceTable: ACTUAL_SALES
+      SALES_RAIL_QTY:
+        type: STRING
+        description: Quantity dispatched by rail
+        sourceColumn: SALES_RAIL_QTY
+        sourceTable: ACTUAL_SALES
+      EPOD_COMPLETION_DATE:
+        type: STRING
+        description: Electronic proof of delivery (ePOD) completion date
+        sourceColumn: EPOD_COMPLETION_DATE
+        sourceTable: ACTUAL_SALES
+      EPOD_STATUS:
+        type: STRING
+        description: Electronic proof of delivery (ePOD) status
+        sourceColumn: EPOD_STATUS
+        sourceTable: ACTUAL_SALES
+      JOURNAL_NO:
+        type: STRING
+        description: Journal number
+        sourceColumn: JOURNAL_NO
+        sourceTable: ACTUAL_SALES
+      TRANSPORTER_BILL_NO:
+        type: STRING
+        description: Transporter bill number
+        sourceColumn: TRANSPORTER_BILL_NO
+        sourceTable: ACTUAL_SALES
+      TRANSPORTER_BILL_DATE:
+        type: STRING
+        description: Transporter bill date
+        sourceColumn: TRANSPORTER_BILL_DATE
+        sourceTable: ACTUAL_SALES
+      IS_VOUCHER_POSTED:
+        type: STRING
+        description: Flag indicating whether the voucher is posted
+        sourceColumn: IS_VOUCHER_POSTED
+        sourceTable: ACTUAL_SALES
+      VEHICLE_NO:
+        type: STRING
+        description: Vehicle number used for dispatch
+        sourceColumn: VEHICLE_NO
+        sourceTable: ACTUAL_SALES
+      VEHICLE_TYPE:
+        type: STRING
+        description: Type of vehicle used for dispatch
+        sourceColumn: VEHICLE_TYPE
+        sourceTable: ACTUAL_SALES
+      TRANSPORTER_BILL_VOUCHER_NO:
+        type: STRING
+        description: Voucher number of the transporter bill
+        sourceColumn: TRANSPORTER_BILL_VOUCHER_NO
+        sourceTable: ACTUAL_SALES
+      TRANSPORTER_BILL_VOUCHER_DATE:
+        type: STRING
+        description: Voucher date of the transporter bill
+        sourceColumn: TRANSPORTER_BILL_VOUCHER_DATE
+        sourceTable: ACTUAL_SALES
+      DLVDATE:
+        type: STRING
+        description: Delivery date
+        sourceColumn: DLVDATE
+        sourceTable: ACTUAL_SALES
+      DEPO_CHECK_IN_TIME:
+        type: STRING
+        description: Depot check-in time of the vehicle
+        sourceColumn: DEPO_CHECK_IN_TIME
+        sourceTable: ACTUAL_SALES
+      DEPO_CHECK_OUT_TIME:
+        type: STRING
+        description: Depot check-out time of the vehicle
+        sourceColumn: DEPO_CHECK_OUT_TIME
+        sourceTable: ACTUAL_SALES
+      BP_APPROVAL_DATE_TIME:
+        type: STRING
+        description: Billing point / business partner approval date and time
+        sourceColumn: BP_APPROVAL_DATE_TIME
+        sourceTable: ACTUAL_SALES
+      GATE_IN_DATE_TIME:
+        type: STRING
+        description: Gate-in date and time at the plant/depot
+        sourceColumn: GATE_IN_DATE_TIME
+        sourceTable: ACTUAL_SALES
+      GATE_OUT_DATE_TIME:
+        type: STRING
+        description: Gate-out date and time at the plant/depot
+        sourceColumn: GATE_OUT_DATE_TIME
+        sourceTable: ACTUAL_SALES
+      SECURITY_IN_DATE_TIME:
+        type: STRING
+        description: Security gate-in date and time
+        sourceColumn: SECURITY_IN_DATE_TIME
+        sourceTable: ACTUAL_SALES
+      SECURITY_OUT_DATE_TIME:
+        type: STRING
+        description: Security gate-out date and time
+        sourceColumn: SECURITY_OUT_DATE_TIME
+        sourceTable: ACTUAL_SALES
+      ESAMPARK_QUANTITY:
+        type: STRING
+        description: Quantity reported in the eSampark system
+        sourceColumn: ESAMPARK_QUANTITY
+        sourceTable: ACTUAL_SALES
+      ESAMPARK_ASSESEABLE_AMT:
+        type: STRING
+        description: Assessable amount reported in eSampark
+        sourceColumn: ESAMPARK_ASSESEABLE_AMT
+        sourceTable: ACTUAL_SALES
+      ESAMPARK_INVOICED_AMT:
+        type: STRING
+        description: Invoiced amount reported in eSampark
+        sourceColumn: ESAMPARK_INVOICED_AMT
+        sourceTable: ACTUAL_SALES
+      ESAMPARK_SGST_AMT:
+        type: STRING
+        description: State GST (SGST) amount reported in eSampark
+        sourceColumn: ESAMPARK_SGST_AMT
+        sourceTable: ACTUAL_SALES
+      ESAMPARK_CGST_AMT:
+        type: STRING
+        description: Central GST (CGST) amount reported in eSampark
+        sourceColumn: ESAMPARK_CGST_AMT
+        sourceTable: ACTUAL_SALES
+      ESAMPARK_IGST_AMT:
+        type: STRING
+        description: Integrated GST (IGST) amount reported in eSampark
+        sourceColumn: ESAMPARK_IGST_AMT
+        sourceTable: ACTUAL_SALES
+      TCS_PERCENTAGE:
+        type: STRING
+        description: Tax Collected at Source (TCS) percentage
+        sourceColumn: TCS_PERCENTAGE
+        sourceTable: ACTUAL_SALES
+      TCS_AMOUNT:
+        type: STRING
+        description: Tax Collected at Source (TCS) amount
+        sourceColumn: TCS_AMOUNT
+        sourceTable: ACTUAL_SALES
+      IRN_NUMBER:
+        type: STRING
+        description: Invoice Reference Number (IRN) for GST e-invoicing
+        sourceColumn: IRN_NUMBER
+        sourceTable: ACTUAL_SALES
+      SALES_OFFICER_ID:
+        type: STRING
+        description: Identifier of the sales officer
+        sourceColumn: SALES_OFFICER_ID
+        sourceTable: ACTUAL_SALES
+      IS_SEZ:
+        type: STRING
+        description: Flag indicating whether the transaction is to a Special Economic
+          Zone (SEZ)
+        sourceColumn: IS_SEZ
+        sourceTable: ACTUAL_SALES
+      D365_TCS_PERCENTAGE:
+        type: STRING
+        description: TCS percentage as recorded in D365
+        sourceColumn: D365_TCS_PERCENTAGE
+        sourceTable: ACTUAL_SALES
+      D365_TCS_AMOUNT:
+        type: STRING
+        description: TCS amount as recorded in D365
+        sourceColumn: D365_TCS_AMOUNT
+        sourceTable: ACTUAL_SALES
+      WCL_INVESTOR_COMMISSION:
+        type: STRING
+        description: Investor commission amount (WCL)
+        sourceColumn: WCL_INVESTOR_COMMISSION
+        sourceTable: ACTUAL_SALES
+      TPA_ID:
+        type: STRING
+        description: Third-party agent (TPA) identifier
+        sourceColumn: TPA_ID
+        sourceTable: ACTUAL_SALES
+      WCL_TPA_COMMISSION:
+        type: STRING
+        description: Third-party agent commission amount (WCL)
+        sourceColumn: WCL_TPA_COMMISSION
+        sourceTable: ACTUAL_SALES
+      SUB_DEALER_CUSTOMER_ID:
+        type: STRING
+        description: Customer identifier of the sub-dealer
+        sourceColumn: SUB_DEALER_CUSTOMER_ID
+        sourceTable: ACTUAL_SALES
+      RETAILER_ID:
+        type: STRING
+        description: Retailer identifier
+        sourceColumn: RETAILER_ID
+        sourceTable: ACTUAL_SALES
+      SELF_SALE:
+        type: STRING
+        description: Flag indicating a self/direct sale
+        sourceColumn: SELF_SALE
+        sourceTable: ACTUAL_SALES
+      RETAILER_SALE:
+        type: STRING
+        description: Flag indicating a retailer sale
+        sourceColumn: RETAILER_SALE
+        sourceTable: ACTUAL_SALES
+      VERIFIED_RETAILER_SALE:
+        type: STRING
+        description: Flag indicating a verified retailer sale
+        sourceColumn: VERIFIED_RETAILER_SALE
+        sourceTable: ACTUAL_SALES
+      ORDER_CONFIRMATION_DATETIME:
+        type: STRING
+        description: Date and time the order was confirmed
+        sourceColumn: ORDER_CONFIRMATION_DATETIME
+        sourceTable: ACTUAL_SALES
+      ORDER_EXECUTION_TIME:
+        type: STRING
+        description: Time the order was executed
+        sourceColumn: ORDER_EXECUTION_TIME
+        sourceTable: ACTUAL_SALES
+      TRANSPORTER_CODE:
+        type: STRING
+        description: Transporter code
+        sourceColumn: TRANSPORTER_CODE
+        sourceTable: ACTUAL_SALES
+      RAILWAY_SIDING_NAME:
+        type: STRING
+        description: Name of the railway siding used for dispatch
+        sourceColumn: RAILWAY_SIDING_NAME
+        sourceTable: ACTUAL_SALES
+      DEALER_CATEGORIES:
+        type: STRING
+        description: Category classification of the dealer
+        sourceColumn: DEALER_CATEGORIES
+        sourceTable: ACTUAL_SALES
+      CP_CATEGORY:
+        type: STRING
+        description: Channel partner (CP) category
+        sourceColumn: CP_CATEGORY
+        sourceTable: ACTUAL_SALES
+      SALES_REGION:
+        type: STRING
+        description: Sales region
+        sourceColumn: SALES_REGION
+        sourceTable: ACTUAL_SALES
+      RAILWAY_SIDING_DP_CODE:
+        type: STRING
+        description: Dispatch point code of the railway siding
+        sourceColumn: RAILWAY_SIDING_DP_CODE
+        sourceTable: ACTUAL_SALES
+      LAST_MODIFIED_DATE:
+        type: STRING
+        description: Date the record was last modified
+        sourceColumn: LAST_MODIFIED_DATE
+        sourceTable: ACTUAL_SALES
+  stateStoreType: loadDataIceberg
   isProfilingEnabled: false
   updateStrategy: Overwrite
-  connection: postgres
-  tableName: public.UserOccupation
+  tableName: iceberg_meta.sales_performance
+  warehousePath: s3a://dataverse/testbed_load/
+  catalogName: postgres_catalog
   optional:
     persistDataFrame: false
     enableDataReconciliation: false
     enforceSchema: true
-  refreshInterval: 30 13 * * *
+    enforceSchemaMethod: Warning
+    catalogType: postgres
+  refreshInterval: "30 12 * * * "
 transformation:
   - isDynamic: true
     alias: Spark_SQL_1
-    description: Transform
+    description: transform
     sequence: 2
     inputDataFrameList:
-      - inputDataFrame: UserMaster_1
+      - inputDataFrame: Actual_Sales_1
         tempViewName: temp
     query: select * from temp
     optional:
