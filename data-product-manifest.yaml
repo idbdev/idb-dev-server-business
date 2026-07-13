@@ -1,65 +1,107 @@
-jobId: "986"
-jobName: User Occupation
+jobId: "3723"
+jobName: Target Analytics
 jobType: Source Aligned Data Product
-developerId: e57fd089-0c45-4273-8d8d-92f488de08b7
+developerId: 3af0876b-d886-4635-af06-b2ecb43da78e
 domain: business
 alias: load
 discoveryPort:
-  name: User Occupation
+  name: Target Analytics
 inputPorts:
-  - alias: UserMaster_1
+  - alias: Target_sales_1
     isDynamic: true
-    connection: postgres
-    tableName/query: usermaster
+    path: s3a://dataverse/testbed/WCL/Target_sales.csv
     optional:
       persistDataFrame: false
+      advanceOptions:
+        delimiter: ","
       enableDataReconciliation: false
       enforceSchema: false
-      dataSetUrn: urn:dv:dataset:3ae0bdae-addd-4a7c-b552-dfbbf884da44
-    type: readPostGreSqlDbUsingJdbc
+      connection: S3 Connection
+      dataSetUrn: urn:dv:dataset:86272a84-b18e-4186-a2bb-904c74a6f413
+    type: inputDelimited
 productState:
   isDynamic: true
   alias: load
   retentionVersions: ""
   logicalSchema:
     properties:
-      name:
+      CUSTOMER_ID:
         type: STRING
-        description: Name of the user
-        sourceColumn: Name
-        sourceTable: public.data_1
-      age:
+        description: Unique identifier of the customer
+        sourceColumn: CUSTOMER_ID
+        sourceTable: TARGET_SALES
+      ITEM_ID:
         type: STRING
-        description: Age of the user
-        sourceColumn: Age
-        sourceTable: public.data_1
-      city:
+        description: Identifier of the product/item, e.g. cement grade such as PPC,
+          OPC43, OPC53
+        sourceColumn: ITEM_ID
+        sourceTable: TARGET_SALES
+      TRANSACTION_DATE:
         type: STRING
-        description: Location of the user
-        sourceColumn: City
-        sourceTable: public.data_1
-      occupation:
+        description: target effective/transaction date for TARGET records (sourced from
+          TRANSDATE)
+        sourceColumn: TRANSDATE
+        sourceTable: TARGET_SALES
+      SALESOFFICER_GUID:
         type: STRING
-        description: Profession of the user
-        sourceColumn: Occupation
-        sourceTable: public.data_1
-  stateStoreType: writeDataFrameToPostgresTable
+        description: Globally unique identifier of the sales officer in the sales hierarchy
+        sourceColumn: SALESOFFICER_GUID
+        sourceTable: TARGET_SALES
+      ZONALHEAD_GUID:
+        type: STRING
+        description: Globally unique identifier of the zonal head
+        sourceColumn: ZONALHEAD_GUID
+        sourceTable: TARGET_SALES
+      STATEHEAD_GUID:
+        type: STRING
+        description: Globally unique identifier of the state head
+        sourceColumn: STATEHEAD_GUID
+        sourceTable: TARGET_SALES
+      BUHEAD_GUID:
+        type: STRING
+        description: Globally unique identifier of the business unit head
+        sourceColumn: BUHEAD_GUID
+        sourceTable: TARGET_SALES
+      SSR_GUID:
+        type: STRING
+        description: Globally unique identifier of the sales/service representative (SSR)
+        sourceColumn: SSR_GUID
+        sourceTable: TARGET_SALES
+      TO_GUID:
+        type: STRING
+        description: Globally unique identifier of the territory officer (TO)
+        sourceColumn: TO_GUID
+        sourceTable: TARGET_SALES
+      TARGET_QTY:
+        type: STRING
+        description: Target quantity assigned for the customer-item
+        sourceColumn: TARGET_QTY
+        sourceTable: TARGET_SALES
+      NEWTARGET_QTY:
+        type: STRING
+        description: Revised target quantity for the customer-item
+        sourceColumn: NEWTARGET_QTY
+        sourceTable: TARGET_SALES
+  stateStoreType: loadDataIceberg
   isProfilingEnabled: false
   updateStrategy: Overwrite
-  connection: postgres
-  tableName: public.UserOccupation
+  tableName: iceberg_meta.target_analytics
+  warehousePath: s3a://dataverse/testbed_load/
+  catalogName: postgres_catalog
   optional:
     persistDataFrame: false
     enableDataReconciliation: false
     enforceSchema: true
-  refreshInterval: 30 13 * * *
+    enforceSchemaMethod: Warning
+    catalogType: postgres
+  refreshInterval: 30 12 * * *
 transformation:
   - isDynamic: true
     alias: Spark_SQL_1
-    description: Transform
+    description: transform
     sequence: 2
     inputDataFrameList:
-      - inputDataFrame: UserMaster_1
+      - inputDataFrame: Target_sales_1
         tempViewName: temp
     query: select * from temp
     optional:
