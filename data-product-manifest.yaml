@@ -3,7 +3,7 @@ jobName: Target Analytics
 jobType: Source Aligned Data Product
 developerId: 3af0876b-d886-4635-af06-b2ecb43da78e
 domain: business
-alias: load
+alias: target
 discoveryPort:
   name: Target Analytics
 inputPorts:
