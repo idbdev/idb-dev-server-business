@@ -17,14 +17,12 @@ inputPorts:
       enableDataReconciliation: false
       enforceSchema: false
       enforceSchemaMethod: Warning
-      dataSetUrn: ""
+      dataSetUrn: urn:dv:dataset:5966da49-187c-413e-b53a-3c7501431f70
     type: readSnowflakeTable
-    dataProductUrn: ""
 productState:
   isDynamic: true
   alias: loading_data
   retentionVersions: ""
-  logicalSchema: ""
   stateStoreType: writeDataFrameToSnowflakeTable
   isProfilingEnabled: false
   connection: Snowflake - yamini
