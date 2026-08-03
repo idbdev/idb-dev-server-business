@@ -56,7 +56,6 @@ productState:
   optional:
     persistDataFrame: false
     truncateColumns: false
-    role: ACCOUNTADMIN
     columnMap:
       - inputColumn: emp_id
         targetColumn: emp_id
