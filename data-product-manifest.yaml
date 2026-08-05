@@ -1,23 +1,23 @@
 jobId: "3468"
 jobName: snowflakeToSnowflake
-jobType: DataSets
+jobType: Source Aligned Data Product
 developerId: 7f096247-19a8-4865-bc66-600180317b87
 domain: business
 alias: loading_data
 discoveryPort:
   name: snowflakeToSnowflake
 inputPorts:
-  - alias: Snowflake_1
+  - alias: Snowflake-vatsal-ds_1
     isDynamic: true
-    connection: Snowflake - yamini
-    tableName/query: employees
+    connection: Snowflake - vatsal
+    tableName/query: customers
     optional:
       persistDataFrame: false
       role: ACCOUNTADMIN
       enableDataReconciliation: false
       enforceSchema: false
       enforceSchemaMethod: Warning
-      dataSetUrn: urn:dv:dataset:5966da49-187c-413e-b53a-3c7501431f70
+      dataSetUrn: urn:dv:dataset:1f5cba57-6723-4d10-a174-1d970ec58184
     type: readSnowflakeTable
 productState:
   isDynamic: true
@@ -25,8 +25,8 @@ productState:
   retentionVersions: ""
   stateStoreType: writeDataFrameToSnowflakeTable
   isProfilingEnabled: false
-  connection: Snowflake - yamini
-  tableName: employeeDV
+  connection: Snowflake - vatsal
+  tableName: customersDV
   logicalSchema:
     properties:
       emp_id:
@@ -57,16 +57,18 @@ productState:
     persistDataFrame: false
     truncateColumns: false
     columnMap:
-      - inputColumn: emp_id
-        targetColumn: emp_id
-      - inputColumn: full_name
-        targetColumn: full_name
-      - inputColumn: department
-        targetColumn: department
-      - inputColumn: salary
-        targetColumn: salary
-      - inputColumn: join_date
-        targetColumn: join_date
+      - inputColumn: customer_id
+        targetColumn: customer_id
+      - inputColumn: first_name
+        targetColumn: first_name
+      - inputColumn: last_name
+        targetColumn: last_name
+      - inputColumn: email
+        targetColumn: email
+      - inputColumn: city
+        targetColumn: city
+      - inputColumn: signup_date
+        targetColumn: signup_date
     addRunIdColumn: false
     enableDataReconciliation: false
     enforceSchema: false
@@ -82,7 +84,7 @@ transformation:
     description: tranforming snowflake data
     sequence: 2
     inputDataFrameList:
-      - inputDataFrame: Snowflake_1
+      - inputDataFrame: Snowflake-vatsal-ds_1
         tempViewName: tmp
     query: select * from tmp
     optional:
