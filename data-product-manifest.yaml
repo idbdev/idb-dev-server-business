@@ -2,9 +2,9 @@ jobId: "4020"
 jobName: tEST MQT
 jobType: Source Aligned Data Product
 jobSubType: realTimeConnector
-developerId: 0849a752-2df4-40d4-aea0-ed4717d76e14
+developerId: 7f096247-19a8-4865-bc66-600180317b87
 domain: business
-alias: Sink_iceberg
+alias: Sink_to_Oracle
 discoveryPort:
   name: tEST MQT
 inputPorts: []
@@ -33,24 +33,43 @@ realTimeConnectorInputPorts:
     sequence: 1
 productState:
   isDynamic: true
-  alias: Sink_iceberg
+  alias: Sink_to_Oracle
   retentionVersions: ""
-  logicalSchema: ""
-  stateStoreType: loadDataIceberg
+  logicalSchema:
+    properties:
+      Name:
+        type: STRING
+        description: Name of the user
+        sourceColumn: Name
+        sourceTable: public.data_1
+        isPII: false
+      Age:
+        type: STRING
+        description: Age of the user
+        sourceColumn: Age
+        sourceTable: public.data_1
+        isPII: true
+      City:
+        type: STRING
+        description: Location of the user
+        sourceColumn: City
+        sourceTable: public.data_1
+        isPII: false
+      Occupation:
+        type: STRING
+        description: Profession of the user
+        sourceColumn: Occupation
+        sourceTable: public.data_1
+        isPII: false
+  stateStoreType: writeDataFrameToOracleTable
   isProfilingEnabled: true
   updateStrategy: Overwrite
-  tableName: iceberg_meta.sink_ice
-  warehousePath: s3a://dataverse/dev_server/iceberg_warehouse_testing/
-  catalogName: postgres_catalog
+  connection: Oracle Connection
+  tableName: system.or_cust_Data_1
   optional:
     persistDataFrame: false
     enableDataReconciliation: false
-    enforceSchema: true
-    enforceSchemaMethod: Warning
-    catalogType: postgres
-    loggingOptions:
-      printSchema: true
-      count: true
+    enforceSchema: false
   refreshInterval: None
 transformation: []
 controlPort:
