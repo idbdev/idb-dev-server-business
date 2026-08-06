@@ -17,9 +17,14 @@ realTimeConnectorInputPorts:
       - abc2
       - abc3
     optional:
+      persistDataFrame: ""
+      enableDataReconciliation: ""
+      enforceSchema: ""
+      dataSetUrn: urn:dv:dataset:726002c6-706c-43e9-b70c-151a36afd9d9
       loggingOptions:
         printSchema: true
         count: true
+        showData: true
     schema:
       - columnName: ""
         dataType: ""
