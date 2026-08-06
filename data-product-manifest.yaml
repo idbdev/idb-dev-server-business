@@ -4,7 +4,7 @@ jobType: Source Aligned Data Product
 jobSubType: realTimeConnector
 developerId: 0849a752-2df4-40d4-aea0-ed4717d76e14
 domain: business
-alias: Sink_data_to_databricks
+alias: Sink_iceberg
 discoveryPort:
   name: tEST MQT
 inputPorts: []
@@ -16,7 +16,10 @@ realTimeConnectorInputPorts:
       - abc1
       - abc2
       - abc3
-    optional: {}
+    optional:
+      loggingOptions:
+        printSchema: true
+        count: true
     schema:
       - columnName: ""
         dataType: ""
@@ -25,18 +28,24 @@ realTimeConnectorInputPorts:
     sequence: 1
 productState:
   isDynamic: true
-  alias: Sink_data_to_databricks
+  alias: Sink_iceberg
   retentionVersions: ""
   logicalSchema: ""
-  stateStoreType: writeDataFrameToDeltaTable
-  isProfilingEnabled: false
+  stateStoreType: loadDataIceberg
+  isProfilingEnabled: true
   updateStrategy: Overwrite
-  tableWritePath: demo.plant1_ot_wide_1
+  tableName: iceberg_meta.sink_ice
+  warehousePath: s3a://dataverse/dev_server/iceberg_warehouse_testing/
+  catalogName: postgres_catalog
   optional:
     persistDataFrame: false
     enableDataReconciliation: false
-    enforceSchema: false
-    connection: databricks conn
+    enforceSchema: true
+    enforceSchemaMethod: Warning
+    catalogType: postgres
+    loggingOptions:
+      printSchema: true
+      count: true
   refreshInterval: None
 transformation: []
 controlPort:
