@@ -1,69 +1,50 @@
-jobId: "986"
-jobName: User Occupation
+jobId: "4020"
+jobName: tEST MQT
 jobType: Source Aligned Data Product
-developerId: e57fd089-0c45-4273-8d8d-92f488de08b7
+jobSubType: realTimeConnector
+developerId: 7f096247-19a8-4865-bc66-600180317b87
 domain: business
-alias: load
+alias: Sink_to_
 discoveryPort:
-  name: User Occupation
-inputPorts:
-  - alias: UserMaster_1
+  name: tEST MQT
+inputPorts: []
+realTimeConnectorInputPorts:
+  - alias: cdc_ds_1
     isDynamic: true
-    connection: postgres
-    tableName/query: usermaster
+    connection: cdc ds
+    tableName: test oracle
+    schema: dsd
+    primaryKeyColumn: dsd
     optional:
-      persistDataFrame: false
-      enableDataReconciliation: false
-      enforceSchema: false
-      dataSetUrn: urn:dv:dataset:3ae0bdae-addd-4a7c-b552-dfbbf884da44
-    type: readPostGreSqlDbUsingJdbc
+      persistDataFrame: ""
+      enableDataReconciliation: ""
+      enforceSchema: ""
+      dataSetUrn: urn:dv:dataset:89684190-a3e0-4d90-b3ac-d3552de8400d
+      loggingOptions:
+        printSchema: true
+        count: true
+        showData: true
+    type: cdcDebeziumStream
+    sequence: 1
 productState:
   isDynamic: true
-  alias: load
+  alias: Sink_to_
   retentionVersions: ""
-  logicalSchema:
-    properties:
-      name:
-        type: STRING
-        description: Name of the user
-        sourceColumn: Name
-        sourceTable: public.data_1
-      age:
-        type: STRING
-        description: Age of the user
-        sourceColumn: Age
-        sourceTable: public.data_1
-      city:
-        type: STRING
-        description: Location of the user
-        sourceColumn: City
-        sourceTable: public.data_1
-      occupation:
-        type: STRING
-        description: Profession of the user
-        sourceColumn: Occupation
-        sourceTable: public.data_1
-  stateStoreType: writeDataFrameToPostgresTable
-  isProfilingEnabled: false
+  logicalSchema: ""
+  stateStoreType: writeDataFrameToDeltaTable
+  isProfilingEnabled: true
   updateStrategy: Overwrite
-  connection: postgres
-  tableName: public.UserOccupation
+  tableWritePath: demo.plant1_ot_wide
   optional:
     persistDataFrame: false
     enableDataReconciliation: false
-    enforceSchema: true
-  refreshInterval: 30 13 * * *
-transformation:
-  - isDynamic: true
-    alias: Spark_SQL_1
-    description: Transform
-    sequence: 2
-    inputDataFrameList:
-      - inputDataFrame: UserMaster_1
-        tempViewName: temp
-    query: select * from temp
-    optional:
-      persistDataFrame: false
-    type: operationThroughSqlQuery
+    enforceSchema: false
+    connection: Data bricks Connection
+    loggingOptions:
+      printSchema: true
+      count: true
+      showData: true
+  refreshInterval: None
+transformation: []
 controlPort:
   dataQualityRules: {}
