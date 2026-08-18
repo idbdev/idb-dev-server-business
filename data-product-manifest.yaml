@@ -4,72 +4,46 @@ jobType: Source Aligned Data Product
 jobSubType: realTimeConnector
 developerId: 7f096247-19a8-4865-bc66-600180317b87
 domain: business
-alias: Sink_to_Oracle
+alias: Sink_to_
 discoveryPort:
   name: tEST MQT
 inputPorts: []
 realTimeConnectorInputPorts:
-  - alias: mqtt_ds2_1
+  - alias: cdc_ds_1
     isDynamic: true
-    connection: mqtt
-    tag:
-      - abc1
-      - abc2
-      - abc3
+    connection: cdc ds
+    tableName: test oracle
+    schema: dsd
+    primaryKeyColumn: dsd
     optional:
       persistDataFrame: ""
       enableDataReconciliation: ""
       enforceSchema: ""
-      dataSetUrn: urn:dv:dataset:726002c6-706c-43e9-b70c-151a36afd9d9
+      dataSetUrn: urn:dv:dataset:89684190-a3e0-4d90-b3ac-d3552de8400d
       loggingOptions:
         printSchema: true
         count: true
         showData: true
-    schema:
-      - columnName: ""
-        dataType: ""
-        nullable: false
-    type: mqttApiStream
+    type: cdcDebeziumStream
     sequence: 1
 productState:
   isDynamic: true
-  alias: Sink_to_Oracle
+  alias: Sink_to_
   retentionVersions: ""
-  logicalSchema:
-    properties:
-      Name:
-        type: STRING
-        description: Name of the user
-        sourceColumn: Name
-        sourceTable: public.data_1
-        isPII: false
-      Age:
-        type: STRING
-        description: Age of the user
-        sourceColumn: Age
-        sourceTable: public.data_1
-        isPII: true
-      City:
-        type: STRING
-        description: Location of the user
-        sourceColumn: City
-        sourceTable: public.data_1
-        isPII: false
-      Occupation:
-        type: STRING
-        description: Profession of the user
-        sourceColumn: Occupation
-        sourceTable: public.data_1
-        isPII: false
-  stateStoreType: writeDataFrameToOracleTable
+  logicalSchema: ""
+  stateStoreType: writeDataFrameToDeltaTable
   isProfilingEnabled: true
   updateStrategy: Overwrite
-  connection: Oracle Connection
-  tableName: system.or_cust_Data_1
+  tableWritePath: demo.plant1_ot_wide
   optional:
     persistDataFrame: false
     enableDataReconciliation: false
     enforceSchema: false
+    connection: Data bricks Connection
+    loggingOptions:
+      printSchema: true
+      count: true
+      showData: true
   refreshInterval: None
 transformation: []
 controlPort:
