@@ -41,7 +41,7 @@ productState:
         sourceColumn: runs
         sourceTable: statistics
       average:
-        type: NUMBER
+        type: DOUBLE
         description: The career batting average of the player
         sourceColumn: average
         sourceTable: statistics
