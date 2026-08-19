@@ -26,7 +26,7 @@ productState:
   logicalSchema:
     properties:
       id:
-        type: STRING
+        type: INTEGER
         description: Primary key identifier for the player's statistical record
         sourceColumn: id
         sourceTable: statistics
@@ -36,17 +36,17 @@ productState:
         sourceColumn: name
         sourceTable: statistics
       runs:
-        type: STRING
+        type: INTEGER
         description: Total career runs scored by the player
         sourceColumn: runs
         sourceTable: statistics
       average:
-        type: STRING
+        type: NUMBER
         description: The career batting average of the player
         sourceColumn: average
         sourceTable: statistics
       highest_score:
-        type: STRING
+        type: INTEGER
         description: The highest individual score achieved by the player in a single innings
         sourceColumn: highest_score
         sourceTable: statistics
