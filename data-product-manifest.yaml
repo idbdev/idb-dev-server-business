@@ -2,14 +2,14 @@ jobId: "4258"
 jobName: OT Sink Test
 jobType: Source Aligned Data Product
 jobSubType: realTimeConnector
-developerId: 7f096247-19a8-4865-bc66-600180317b87
+developerId: e3177aef-f9f9-4f45-b0a7-a46ea5466170
 domain: business
 alias: Write_data_to_Data_Bricks
 discoveryPort:
   name: OT Sink Test
 inputPorts: []
 realTimeConnectorInputPorts:
-  - alias: ot-ds_1
+  - alias: ot_ds_1
     isDynamic: true
     connection: mqtt
     tag:
@@ -22,7 +22,7 @@ realTimeConnectorInputPorts:
       persistDataFrame: ""
       enableDataReconciliation: ""
       enforceSchema: ""
-      dataSetUrn: urn:dv:dataset:2feab8e1-c6e8-4e64-a543-341fa804ca1c
+      dataSetUrn: urn:dv:dataset:c956e30a-de62-4a6a-ad2b-5354992bcea3
     schema:
       - columnName: ""
         dataType: ""
