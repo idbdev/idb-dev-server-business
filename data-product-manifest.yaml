@@ -71,4 +71,16 @@ productState:
   refreshInterval: None
 transformation: []
 controlPort:
-  dataQualityRules: {}
+  dataQualityRules:
+    NullValueCheck:
+      productState:
+        checks:
+          - column: Boiler1_Pressure
+        referenceAlias: Write_data_to_Data_Bricks
+    UniqueCombinationCheck:
+      productState:
+        checks:
+          - columns:
+              - Boiler1_Pressure
+              - id
+        referenceAlias: Write_data_to_Data_Bricks
