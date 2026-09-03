@@ -33,7 +33,133 @@ productState:
   isDynamic: true
   alias: Write_data_to_Data_Bricks
   retentionVersions: ""
-  logicalSchema: ""
+  logicalSchema:
+    properties:
+      score_id:
+        type: STRING
+        description: Unique identifier of the credit score record
+        sourceColumn: score_id
+        sourceTable: credit_score
+      customer_id:
+        type: STRING
+        description: Unique identifier of the customer
+        sourceColumn: customer_id
+        sourceTable: credit_score
+      score_value:
+        type: STRING
+        description: Actual credit score value
+        sourceColumn: score_value
+        sourceTable: credit_score
+      score_range_min:
+        type: STRING
+        description: Minimum value of the credit score range
+        sourceColumn: score_range_min
+        sourceTable: credit_score
+      score_range_max:
+        type: STRING
+        description: Maximum value of the credit score range
+        sourceColumn: score_range_max
+        sourceTable: credit_score
+      scoring_model_name:
+        type: STRING
+        description: Name of the scoring model used
+        sourceColumn: scoring_model_name
+        sourceTable: credit_score
+      model_version:
+        type: STRING
+        description: Version of the scoring model
+        sourceColumn: model_version
+        sourceTable: credit_score
+      score_date:
+        type: STRING
+        description: Date when the score was generated
+        sourceColumn: score_date
+        sourceTable: credit_score
+      score_valid_till:
+        type: STRING
+        description: Validity end date of the credit score
+        sourceColumn: score_valid_till
+        sourceTable: credit_score
+      score_status:
+        type: STRING
+        description: Status of the credit score
+        sourceColumn: score_status
+        sourceTable: credit_score
+      enquiry_id:
+        type: STRING
+        description: Unique identifier of the bureau enquiry
+        sourceColumn: enquiry_id
+        sourceTable: bureau_enquiry
+      bureau_name:
+        type: STRING
+        description: Name of the credit bureau
+        sourceColumn: bureau_name
+        sourceTable: bureau_enquiry
+      enquiry_date:
+        type: STRING
+        description: Date when the bureau enquiry was made
+        sourceColumn: enquiry_date
+        sourceTable: bureau_enquiry
+      enquiry_type:
+        type: STRING
+        description: Type of bureau enquiry
+        sourceColumn: enquiry_type
+        sourceTable: bureau_enquiry
+      product_type:
+        type: STRING
+        description: Type of product for which enquiry was made
+        sourceColumn: product_type
+        sourceTable: bureau_enquiry
+      amount_requested:
+        type: STRING
+        description: Requested loan or credit amount
+        sourceColumn: amount_requested
+        sourceTable: bureau_enquiry
+      enquiry_result:
+        type: STRING
+        description: Result of the bureau enquiry
+        sourceColumn: enquiry_result
+        sourceTable: bureau_enquiry
+      bureau_reference_string:
+        type: STRING
+        description: Reference datetime provided by the bureau
+        sourceColumn: bureau_reference_string
+        sourceTable: bureau_enquiry
+      report_id:
+        type: STRING
+        description: Unique identifier of the credit report
+        sourceColumn: report_id
+        sourceTable: bureau_enquiry
+      report_date:
+        type: STRING
+        description: Date when the credit report was generated
+        sourceColumn: report_date
+        sourceTable: bureau_enquiry
+      bureau_score:
+        type: STRING
+        description: Score provided by the credit bureau
+        sourceColumn: bureau_score
+        sourceTable: bureau_enquiry
+      total_accounts_reported:
+        type: STRING
+        description: Total string of accounts reported by bureau
+        sourceColumn: total_accounts_reported
+        sourceTable: bureau_enquiry
+      total_enquiries_12m:
+        type: STRING
+        description: Total enquiries made in last 12 months
+        sourceColumn: total_enquiries_12m
+        sourceTable: bureau_enquiry
+      max_dpd_24m:
+        type: STRING
+        description: Maximum days past due in last 24 months
+        sourceColumn: max_dpd_24m
+        sourceTable: bureau_enquiry
+      write_off_flag:
+        type: STRING
+        description: Indicates if any write-off is reported
+        sourceColumn: write_off_flag
+        sourceTable: bureau_enquiry
   stateStoreType: writeDataFrameToDeltaTable
   isProfilingEnabled: false
   updateStrategy: Overwrite
