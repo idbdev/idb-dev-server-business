@@ -1,69 +1,53 @@
-jobId: "986"
-jobName: User Occupation
+jobId: "1183"
+jobName: OT Delta Test
 jobType: Source Aligned Data Product
-developerId: e57fd089-0c45-4273-8d8d-92f488de08b7
+jobSubType: realTimeConnector
+developerId: e3177aef-f9f9-4f45-b0a7-a46ea5466170
 domain: business
-alias: load
+alias: Write_data_to_Data_Bricks
 discoveryPort:
-  name: User Occupation
-inputPorts:
-  - alias: UserMaster_1
+  name: OT Delta Test
+inputPorts: []
+realTimeConnectorInputPorts:
+  - alias: Mq_1
     isDynamic: true
-    connection: postgres
-    tableName/query: usermaster
+    connection: OT Connection
+    tag:
+      - Boiler1.Temp
+      - Boiler1.Pressure
+      - Pump2.FlowRate
+      - Valve3.Position
+      - Compressor1.Speed
     optional:
-      persistDataFrame: false
-      enableDataReconciliation: false
-      enforceSchema: false
-      dataSetUrn: urn:dv:dataset:3ae0bdae-addd-4a7c-b552-dfbbf884da44
-    type: readPostGreSqlDbUsingJdbc
+      persistDataFrame: ""
+      enableDataReconciliation: ""
+      enforceSchema: ""
+      dataSetUrn: urn:dv:dataset:86a0df9f-4347-4d2c-8984-344224ad8534
+    schema:
+      - columnName: ""
+        dataType: ""
+        nullable: false
+    type: mqttApiStream
+    sequence: 1
 productState:
   isDynamic: true
-  alias: load
+  alias: Write_data_to_Data_Bricks
   retentionVersions: ""
-  logicalSchema:
-    properties:
-      name:
-        type: STRING
-        description: Name of the user
-        sourceColumn: Name
-        sourceTable: public.data_1
-      age:
-        type: STRING
-        description: Age of the user
-        sourceColumn: Age
-        sourceTable: public.data_1
-      city:
-        type: STRING
-        description: Location of the user
-        sourceColumn: City
-        sourceTable: public.data_1
-      occupation:
-        type: STRING
-        description: Profession of the user
-        sourceColumn: Occupation
-        sourceTable: public.data_1
-  stateStoreType: writeDataFrameToPostgresTable
+  logicalSchema: ""
+  stateStoreType: writeDataFrameToDeltaTable
   isProfilingEnabled: false
   updateStrategy: Overwrite
-  connection: postgres
-  tableName: public.UserOccupation
+  tableWritePath: demo.plant1_ot_wide
   optional:
     persistDataFrame: false
     enableDataReconciliation: false
-    enforceSchema: true
-  refreshInterval: 30 13 * * *
-transformation:
-  - isDynamic: true
-    alias: Spark_SQL_1
-    description: Transform
-    sequence: 2
-    inputDataFrameList:
-      - inputDataFrame: UserMaster_1
-        tempViewName: temp
-    query: select * from temp
-    optional:
-      persistDataFrame: false
-    type: operationThroughSqlQuery
+    enforceSchema: false
+    connection: databricks conn
+    loggingOptions:
+      printSchema: true
+      count: true
+      showData: true
+  refreshInterval: None
+transformation: []
 controlPort:
   dataQualityRules: {}
