@@ -163,12 +163,15 @@ productState:
   stateStoreType: writeDataFrameToDeltaTable
   isProfilingEnabled: false
   updateStrategy: Overwrite
-  tableWritePath: demo.plant1_ot_wide
+  tableWritePath: iceberg_meta.plant1_ot_wide_39
+  warehousePath: s3a://dataverse/testbed_load/
+  catalogName: postgres_catalog
   optional:
     persistDataFrame: false
     enableDataReconciliation: false
     enforceSchema: false
-    connection: databricks conn
+    catalogType: postgres
+    connection: S3 Connection
     loggingOptions:
       printSchema: true
       count: true
