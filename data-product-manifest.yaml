@@ -4,9 +4,9 @@ jobType: Source Aligned Data Product
 jobSubType: realTimeConnector
 developerId: e3177aef-f9f9-4f45-b0a7-a46ea5466170
 domain: business
-alias: Write_data_to_Data_Bricks_1
+alias: Write_data_to_Data_Bricks
 discoveryPort:
-  name: OT Delta Test_1
+  name: OT Delta Test
 inputPorts: []
 realTimeConnectorInputPorts:
   - alias: Mq_1
@@ -163,15 +163,12 @@ productState:
   stateStoreType: writeDataFrameToDeltaTable
   isProfilingEnabled: false
   updateStrategy: Overwrite
-  tableWritePath: iceberg_meta.plant1_ot_wide_39
-  warehousePath: s3a://dataverse/testbed_load/
-  catalogName: postgres_catalog
+  tableWritePath: demo.plant1_ot_wide
   optional:
     persistDataFrame: false
     enableDataReconciliation: false
     enforceSchema: false
-    catalogType: postgres
-    connection: S3 Connection
+    connection: databricks conn
     loggingOptions:
       printSchema: true
       count: true
