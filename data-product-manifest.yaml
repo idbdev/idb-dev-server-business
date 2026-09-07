@@ -2,7 +2,7 @@ jobId: "4258"
 jobName: OT Sink Test
 jobType: Source Aligned Data Product
 jobSubType: realTimeConnector
-developerId: 7f096247-19a8-4865-bc66-600180317b87
+developerId: 0849a752-2df4-40d4-aea0-ed4717d76e14
 domain: business
 alias: Write_data_to_Delta_
 discoveryPort:
@@ -56,7 +56,7 @@ productState:
         sourceColumn: Occupation
         sourceTable: public.data_1
   stateStoreType: writeDataFrameToDeltaTable
-  isProfilingEnabled: false
+  isProfilingEnabled: true
   updateStrategy: Overwrite
   tableWritePath: demo.plant1_ot_wide
   optional:
