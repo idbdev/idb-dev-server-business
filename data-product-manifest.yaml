@@ -2,11 +2,11 @@ jobId: "1183"
 jobName: OT Delta Test
 jobType: Source Aligned Data Product
 jobSubType: realTimeConnector
-developerId: e3177aef-f9f9-4f45-b0a7-a46ea5466170
+developerId: e5406d89-68ee-4c27-856a-b669239e1454
 domain: business
-alias: Write_data_to_Data_Bricks_1
+alias: Write_data_to_databricks
 discoveryPort:
-  name: OT Delta Test_1
+  name: OT Delta Test
 inputPorts: []
 realTimeConnectorInputPorts:
   - alias: Mq_1
@@ -31,7 +31,7 @@ realTimeConnectorInputPorts:
     sequence: 1
 productState:
   isDynamic: true
-  alias: Write_data_to_Data_Bricks
+  alias: Write_data_to_databricks
   retentionVersions: ""
   logicalSchema:
     properties:
@@ -161,7 +161,7 @@ productState:
         sourceColumn: write_off_flag
         sourceTable: bureau_enquiry
   stateStoreType: writeDataFrameToDeltaTable
-  isProfilingEnabled: false
+  isProfilingEnabled: true
   updateStrategy: Overwrite
   tableWritePath: demo.plant1_ot_wide
   optional:
@@ -171,8 +171,8 @@ productState:
     connection: databricks conn
     loggingOptions:
       printSchema: true
-      count: true
       showData: true
+  tableName: demo.plant1_ot_wide
   refreshInterval: None
 transformation: []
 controlPort:
