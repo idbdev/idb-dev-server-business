@@ -2,7 +2,7 @@ jobId: "4258"
 jobName: OT Sink Test 1
 jobType: Source Aligned Data Product
 jobSubType: realTimeConnector
-developerId: e3177aef-f9f9-4f45-b0a7-a46ea5466170
+developerId: e57fd089-0c45-4273-8d8d-92f488de08b7
 domain: business
 alias: Write_data_to_Data_Bricks_1
 discoveryPort:
