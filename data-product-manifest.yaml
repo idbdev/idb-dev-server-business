@@ -2,7 +2,7 @@ jobId: "4258"
 jobName: OT Sink Test
 jobType: Source Aligned Data Product
 jobSubType: realTimeConnector
-developerId: 0849a752-2df4-40d4-aea0-ed4717d76e14
+developerId: 7f096247-19a8-4865-bc66-600180317b87
 domain: business
 alias: Write_data_to_Delta_
 discoveryPort:
@@ -68,4 +68,14 @@ productState:
   refreshInterval: None
 transformation: []
 controlPort:
-  dataQualityRules: {}
+  dataQualityRules:
+    NullValueCheck:
+      productState:
+        checks:
+          - column: _ingestion_timestamp
+        referenceAlias: Write_data_to_Delta_
+    UniquenessCheck:
+      productState:
+        checks:
+          - column: _ingestion_timestamp
+        referenceAlias: Write_data_to_Delta_
