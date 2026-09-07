@@ -59,6 +59,7 @@ productState:
   isProfilingEnabled: false
   updateStrategy: Overwrite
   tableName: demo.plant1_ot_wide
+  tableWritePath: demo.plant1_ot_wide
   optional:
     persistDataFrame: false
     enableDataReconciliation: false
