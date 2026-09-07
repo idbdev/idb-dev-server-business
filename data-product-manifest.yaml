@@ -1,15 +1,15 @@
 jobId: "4258"
-jobName: OT Sink Test 1
+jobName: OT Sink Test
 jobType: Source Aligned Data Product
 jobSubType: realTimeConnector
-developerId: e57fd089-0c45-4273-8d8d-92f488de08b7
+developerId: 0849a752-2df4-40d4-aea0-ed4717d76e14
 domain: business
-alias: Write_data_to_Data_Bricks_1
+alias: Write_data_to_Delta_
 discoveryPort:
-  name: OT Sink Test 1
+  name: OT Sink Test
 inputPorts: []
 realTimeConnectorInputPorts:
-  - alias: ot_ds_1.1
+  - alias: ot-ds_1
     isDynamic: true
     connection: mqtt
     tag:
@@ -22,7 +22,7 @@ realTimeConnectorInputPorts:
       persistDataFrame: ""
       enableDataReconciliation: ""
       enforceSchema: ""
-      dataSetUrn: urn:dv:dataset:c956e30a-de62-4a6a-ad2b-5354992bcea3
+      dataSetUrn: urn:dv:dataset:2feab8e1-c6e8-4e64-a543-341fa804ca1c
     schema:
       - columnName: ""
         dataType: ""
@@ -31,7 +31,7 @@ realTimeConnectorInputPorts:
     sequence: 1
 productState:
   isDynamic: true
-  alias: Write_data_to_Data_Bricks
+  alias: Write_data_to_Delta_
   retentionVersions: ""
   logicalSchema:
     properties:
@@ -58,30 +58,14 @@ productState:
   stateStoreType: writeDataFrameToDeltaTable
   isProfilingEnabled: false
   updateStrategy: Overwrite
-  tableName: demo.plant1_ot_wide
   tableWritePath: demo.plant1_ot_wide
   optional:
     persistDataFrame: false
     enableDataReconciliation: false
     enforceSchema: false
     connection: databricks conn
-    loggingOptions:
-      printSchema: true
-      count: true
-      showData: true
+  tableName: demo.plant1_ot_wide
   refreshInterval: None
 transformation: []
 controlPort:
-  dataQualityRules:
-    NullValueCheck:
-      productState:
-        checks:
-          - column: Boiler1_Pressure
-        referenceAlias: Write_data_to_Data_Bricks
-    UniqueCombinationCheck:
-      productState:
-        checks:
-          - columns:
-              - Boiler1_Pressure
-              - id
-        referenceAlias: Write_data_to_Data_Bricks
+  dataQualityRules: {}
