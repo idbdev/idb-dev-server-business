@@ -163,7 +163,7 @@ productState:
   stateStoreType: writeDataFrameToDeltaTable
   isProfilingEnabled: true
   updateStrategy: Overwrite
-  tableWritePath: demo.plant1_ot_wide
+  tableWritePath: demo.plant3_ot_wide
   optional:
     persistDataFrame: false
     enableDataReconciliation: false
@@ -172,7 +172,7 @@ productState:
     loggingOptions:
       printSchema: true
       showData: true
-  tableName: demo.plant1_ot_wide
+  tableName: demo.plant3_ot_wide
   refreshInterval: None
 transformation: []
 controlPort:
