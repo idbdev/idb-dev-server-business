@@ -176,4 +176,14 @@ productState:
   refreshInterval: None
 transformation: []
 controlPort:
-  dataQualityRules: {}
+  dataQualityRules:
+    NullValueCheck:
+      productState:
+        checks:
+          - column: "tag_name "
+        referenceAlias: Write_data_to_databricks
+    UniquenessCheck:
+      productState:
+        checks:
+          - column: "tag_name "
+        referenceAlias: Write_data_to_databricks
